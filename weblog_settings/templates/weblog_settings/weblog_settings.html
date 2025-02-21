@@ -1,0 +1,44 @@
+{% extends 'main.html' %}
+
+
+{% block title %}
+    <title>{{ data.title }}</title>
+{% endblock %}
+
+{% block seo %}
+    <!-- SEO Meta Tags -->
+    <meta name="description"
+          content="{{ data.description }}">
+    <meta name="keywords"
+          content="{{ keywords }}">
+    <meta name="author" content="{{ data.author }}">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph Meta Tags (for social sharing) -->
+    <meta property="og:title" content="{{ data.og_title }}">
+    <meta property="og:description"
+          content="{{ data.og_description }}">
+
+    <meta property="og:url" content="{{ data.og_url }}">
+    <meta property="og:type" content="website">
+{% endblock %}
+
+{% block header %}
+    <header class="py-5 bg-light border-bottom mb-4">
+        <div class="container">
+            <div class="text-center">
+                <h1 class="fw-bolder">{{ data.title }}</h1>
+                <p class="lead mb-0">{{ data.subtitle }}</p>
+            </div>
+        </div>
+    </header>
+{% endblock %}
+
+
+{% block footer %}
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">{{ data.footer }}</p>
+        </div>
+    </footer>
+{% endblock %}

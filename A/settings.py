@@ -36,7 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # LOCAL APPS
+    # My APPS
+    'weblog_settings',
     'home.apps.HomeConfig',
     'accounts.apps.AccountsConfig',
 
