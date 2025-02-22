@@ -1,0 +1,59 @@
+{% extends 'main.html' %}
+<!-- Main Content -->
+{% block blog_detail %}
+
+    <!-- Blog Post Column -->
+    <div class="col-lg-8">
+        <div class="card mb-4">
+            <img src="{{ post.image.url }}" class="card-img-top" alt="Post Title">
+            <div class="card-body">
+                <h1 class="card-title">{{ post.title }}</h1>
+                <div class="post-meta mb-3">
+                    <span>Posted on {{ post.created }}</span>
+                    <span> by {{ post.author }}</span>
+                    <span> in <a href="#" class="text-decoration-none">{{ post.categories }}</a></span>
+                </div>
+                <div class="post-content">
+                    <p>{{ post.content }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comments Section -->
+        <div class="card mb-4">
+            <div class="card-header">Comments</div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <strong>Jane Smith</strong>
+                    <small class="text-muted">February 22, 2025 14:30</small>
+                    <p>Great article! Really enjoyed reading this.</p>
+                </div>
+                <div class="mb-3">
+                    <strong>Bob Johnson</strong>
+                    <small class="text-muted">February 22, 2025 15:45</small>
+                    <p>Interesting perspective. Thanks for sharing!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comment Form -->
+        <div class="card mb-4">
+            <div class="card-header">Leave a Comment</div>
+            <div class="card-body">
+                <form method="post" action="#">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="comment" class="form-label">Comment</label>
+                        <textarea class="form-control" id="comment" name="comment" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Comment</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

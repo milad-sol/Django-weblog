@@ -22,5 +22,5 @@ class UserAdmin(BaseUserAdmin):
     ordering = ('email',)
     filter_horizontal = ('groups', 'user_permissions')
     add_fieldsets = [
-        ('Main', {'fields': ['full_name', 'phone_number', 'email', 'password', 'password2']}),
+        ('Main', {'fields': ['full_name', 'phone_number', 'email', 'password', 'confirm_password']}),
     ]

@@ -1,13 +1,14 @@
-from django.shortcuts import render
-from django.views import View
+from django.views.generic import TemplateView, ListView
+from posts.models import Post
+from .models import WeblogSettings
 
 
-# Create your views here.
-class HomeView(View):
-    template_name = 'home/home.html'
+class HomeView(TemplateView):
+    template_name = 'home/home.html'  # Ensure this matches the template file name
+    model = Post, WeblogSettings
 
-    def get(self, request):
-        return render(request, self.template_name)
-
-
-
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['settings'] = WeblogSettings.objects.first()
+        context['posts'] = Post.objects.all()
+        return context

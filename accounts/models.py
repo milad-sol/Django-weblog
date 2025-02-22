@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from .manager import  UserManager
+from .manager import UserManager
+
 
 class User(AbstractUser):
     email = models.EmailField(unique=True, max_length=255)
@@ -15,7 +16,7 @@ class User(AbstractUser):
     objects = UserManager()
 
     def __str__(self):
-        return self.email
+        return self.full_name
 
     def has_perm(self, perm, obj=...):
         return True

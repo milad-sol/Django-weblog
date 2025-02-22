@@ -1,1 +1,84 @@
 {% extends 'main.html' %}
+<!-- Start blocks of weblog settings app -->
+{% block title %}
+    {{ settings.title }}
+{% endblock %}
+
+{% block seo %}
+    <!-- SEO Meta Tags -->
+    <meta name="description"
+          content="{{ settings.description }}">
+    <meta name="keywords"
+          content="{{ keywords }}">
+    <meta name="author" content="{{ settings.author }}">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph Meta Tags (for social sharing) -->
+    <meta property="og:title" content="{{ settings.og_title }}">
+    <meta property="og:description"
+          content="{{ settings.og_description }}">
+
+    <meta property="og:url" content="{{ settings.og_url }}">
+    <meta property="og:type" content="website">
+{% endblock %}
+
+{% block header %}
+    <header class="py-5 bg-light border-bottom mb-4">
+        <div class="container">
+            <div class="text-center">
+                <h1 class="fw-bolder">{{ settings.title }}</h1>
+                <p class="lead mb-0">{{ settings.subtitle }}</p>
+            </div>
+        </div>
+    </header>
+{% endblock %}
+
+
+{% block footer %}
+    <footer class="py-4 bg-dark text-white-50 mt-5">
+        <div class="container text-center">
+            <small>&copy;{{ settings.footer }}</small>
+        </div>
+    </footer>
+{% endblock %}
+
+<!-- End blocks of weblog settings app -->
+
+{% block post_list %}
+
+
+    <div class="col-lg-8">
+        {% for post in posts %}
+            {% if post.is_hot_post %}
+                <h2 class="fw-bold">🔥 Hot Posts</h2>
+                <div class="card mb-4 border-danger">
+                    <img src="{{ post.image.url }}" class="card-img-top" alt="Hot Post 1">
+                    <div class="card-body">
+                        <div class="small text-muted">{{ post.created }}</div>
+                        <div class="small text-muted">category: <a
+                                class="text-bold ">{{ post.categories }}</a></div>
+                        <h2 class="card-title text-danger">{{ post.title }}</h2>
+                        <p class="card-text">{{ post.content|truncatewords:30 }}</p>
+                        <a href="{{ post.get_absolute_url }}" class="btn btn-danger">Read more →</a>
+                    </div>
+                </div>
+            {% else %}
+                <!-- Other Posts Section -->
+                <h2 class="fw-bold mt-5">📌 Other Posts</h2>
+                <div class="card mb-4">
+                    <img src="{{ post.image.url }}" class="card-img-top" alt="Other Post 1">
+                    <div class="card-body">
+                        <div class="small text-muted">{{ post.created }}</div>
+                        <div class="small text-muted">category: <a
+                                class="text-bold ">{{ post.categories }}</a></div>
+                        <h2 class="card-title">{{ post.title }}</h2>
+                        <p class="card-text">{{ post.content|truncatewords:30 }}</p>
+                        <a href="{{ post.get_absolute_url }}" class="btn btn-primary">Read more →</a>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+
+{% endblock %}
