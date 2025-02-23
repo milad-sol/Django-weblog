@@ -7,30 +7,37 @@ from .models import User
 
 class UserCreationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
-    password2 = forms.CharField(widget=forms.PasswordInput())
+    confirm_password = forms.CharField(widget=forms.PasswordInput())
 
     class Meta:
         model = User
-        fields = ['phone_number', 'email', 'full_name', 'password', 'password2']
+        fields = ['full_name', 'username', 'phone_number', 'email']
 
-    def clean_password2(self):
+    def clean_confirm_password(self):
         password = self.cleaned_data.get('password')
-        password2 = self.cleaned_data.get('password2')
-        if password and password2 and password != password2:
+        confirm_password = self.cleaned_data.get('confirm_password')
+        if password and confirm_password and password != confirm_password:
             raise ValidationError('Passwords do not match')
-        return password2
+        return confirm_password
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        user_in_database = User.objects.filter(username__iexact=username)
+        if user_in_database:
+            raise ValidationError('Username already exists')
+        return username
 
     def clean_phone_number(self):
         phone_number = self.cleaned_data.get('phone_number')
-        phone_number_in_database = User.objects.get(phone_number=phone_number)
-        if phone_number_in_database == phone_number:
+        phone_in_database = User.objects.filter(phone_number__iexact=phone_number)
+        if phone_in_database:
             raise ValidationError('Phone number already exists')
         return phone_number
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        email_in_database = User.objects.get(email=email)
-        if email_in_database == email:
+        email_in_database = User.objects.filter(email__iexact=email)
+        if email_in_database:
             raise ValidationError('Email already exists')
         return email
 
@@ -47,4 +54,4 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['phone_number', 'email', 'full_name', 'password', 'is_active', 'is_admin','is_superuser']
+        fields = ['phone_number', 'username', 'email', 'full_name', 'password', 'last_login']
