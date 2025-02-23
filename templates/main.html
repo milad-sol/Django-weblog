@@ -25,10 +25,14 @@
 
 <div class="container">
     <div class="row">
+
         <!-- Blog Entries Column -->
 
         <div class="col-lg-8">
+            {% block login %}{% endblock %}
+            {% block register %}
 
+            {% endblock %}
             {% block post_list %}{% endblock %}
         </div>
         {% block blog_detail %}{% endblock %}

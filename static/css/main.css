@@ -59,3 +59,11 @@ body {
     top: 20px; /* Distance from top when it starts sticking */
     height: fit-content; /* Ensures it doesn't stretch */
 }
+
+.navbar-brand {
+    margin-right: 1rem; /* Reduced margin to keep it close to menu */
+}
+
+.navbar .container {
+    padding-left: 0; /* Remove left padding to shift brand leftmost */
+}
