@@ -1,6 +1,9 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
-from django.views.generic import TemplateView, View, FormView
+from django.views.generic import TemplateView, View, FormView, ListView
+
+from posts.models import Post
 from .forms import UserRegistrationForm, LoginForm
 from .models import User
 from django.contrib.auth import login, logout, authenticate
@@ -47,5 +50,11 @@ class RegisterView(View):
         return render(request, self.template_name, {'form': form})
 
 
-class ProfileView(TemplateView):
+class ProfileView(LoginRequiredMixin, TemplateView):
     template_name = 'accounts/profile.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user'] = User.objects.get(id=self.request.user.id)
+        context['user_post'] = Post.objects.filter(author=self.request.user)
+        return context

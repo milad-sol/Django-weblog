@@ -7,7 +7,7 @@
         <!-- Left: User Info -->
 
         <div class="card mb-4">
-            <div class="card-header">Profile</div>
+            <div class="card-header">{{ user.full_name |capfirst }}</div>
             <div class="card-body">
                 <div class="row categories-list">
                     <div class="col-sm-12">
@@ -17,8 +17,10 @@
                                      class="profile-picture ">
                             </a>
                             <br><br>
-                            <label class="">Username:</label> JohnDoe<br><br>
-                            <label>Email:</label> johndoe@example.com<br><br>
+                            <label class="">Full Name :</label> {{ user.full_name }}<br><br>
+                            <label>Username:</label> {{ user.username }}<br><br>
+                            <label>Phone:</label> {{ user.phone_number }}<br><br>
+                            <label>Email:</label> {{ user.email }}<br><br>
                             <a href="/accounts/profile/edit/">Edit Profile</a>
                         </div>
 
@@ -28,19 +30,25 @@
             </div>
         </div>
         <!-- Center: User Posts -->
+
         <div class="posts-section ">
-            <div class="post ">
-                <label>Title:</label> First Post Title<br>
-                <label>Content:</label> This is the content of my first post<br><br>
-            </div>
-            <div class="post">
-                <label>Title:</label> Second Post Title<br>
-                <label>Content:</label> Another post here.<br><br>
-            </div>
-            <div class="post">
-                <label>Title:</label> Third Post Title<br>
-                <label>Content:</label> Sed do eiusmod tempor <br><br>
-            </div>
+            {% for post in user_post %}
+                <div class="post ">
+
+                    <div>
+                        <h2>{{ post.title }}</h2>
+
+                        <p>{{ post.content|truncatewords:300 }}</p>
+                        {#                        TODO:like the category#}
+                        <p>
+                        <p>category: <a href="">{{ post.categories }}</a></p>
+                        <a href="{{ post.get_absolute_url }}">
+                            <button class="btn btn-info">read more</button>
+                        </a>
+                        <hr>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
 
 
