@@ -13,6 +13,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_superuser = models.BooleanField(default=False)
     USERNAME_FIELD = 'phone_number'
     REQUIRED_FIELDS = ['username', 'email', 'full_name']
+    readonly_fields = ['is_active', 'is_admin', 'is_superuser']
     objects = UserManager()
 
     def __str__(self):
