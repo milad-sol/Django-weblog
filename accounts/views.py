@@ -1,15 +1,29 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, View, FormView
-from .forms import UserRegistrationForm
+from .forms import UserRegistrationForm, LoginForm
 from .models import User
+from django.contrib.auth import login, logout, authenticate
 
 
 # Create your views here.
 
 
-class LoginView(TemplateView):
+class LoginView(FormView):
     template_name = 'accounts/login.html'
+    form_class = LoginForm
+    model = User
+
+    def form_valid(self, form):
+        user_data = form.cleaned_data
+        user = authenticate(username=user_data['username'], password=user_data['password'])
+        if user is not None:
+            login(self.request, user)
+            messages.success(self.request, 'You are now logged in.', 'success')
+            self.request.session['user'] = user.id
+            return redirect('accounts:profile')
+        messages.error(self.request, 'Invalid username or password.', 'danger')
+        return redirect('accounts:login')
 
 
 class RegisterView(View):
@@ -30,3 +44,7 @@ class RegisterView(View):
             return redirect('accounts:login')
         messages.error(request, form.errors, extra_tags='danger')
         return render(request, self.template_name, {'form': form})
+
+
+class ProfileView(TemplateView):
+    template_name = 'accounts/profile.html'

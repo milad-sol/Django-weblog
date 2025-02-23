@@ -28,18 +28,20 @@
 
         <!-- Blog Entries Column -->
 
-        <div class="col-lg-8">
+        <div class="col-lg-9">
             {% block login %}{% endblock %}
             {% block register %}
 
             {% endblock %}
             {% block post_list %}{% endblock %}
+         {% block profile %}{% endblock %}
         </div>
         {% block blog_detail %}{% endblock %}
+
         <!-- Sidebar -->
         <!-- Sidebar -->
 
-        <div class="col-lg-4">
+        <div class="col-lg-3">
             <!-- Search Widget -->
             <div class="card mb-4">
                 <div class="card-header">Search</div>

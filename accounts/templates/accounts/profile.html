@@ -1,0 +1,48 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block profile %}
+
+    <div class="profile-container">
+        <!-- Left: User Info -->
+
+        <div class="card mb-4">
+            <div class="card-header">Profile</div>
+            <div class="card-body">
+                <div class="row categories-list">
+                    <div class="col-sm-12">
+                        <div class="user-info">
+                            <a class="profile-picture-section">
+                                <img src="{% static 'images/profile/3135715.png' %}" alt="Profile Picture"
+                                     class="profile-picture ">
+                            </a>
+                            <br><br>
+                            <label class="">Username:</label> JohnDoe<br><br>
+                            <label>Email:</label> johndoe@example.com<br><br>
+                            <a href="/accounts/profile/edit/">Edit Profile</a>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- Center: User Posts -->
+        <div class="posts-section ">
+            <div class="post ">
+                <label>Title:</label> First Post Title<br>
+                <label>Content:</label> This is the content of my first post<br><br>
+            </div>
+            <div class="post">
+                <label>Title:</label> Second Post Title<br>
+                <label>Content:</label> Another post here.<br><br>
+            </div>
+            <div class="post">
+                <label>Title:</label> Third Post Title<br>
+                <label>Content:</label> Sed do eiusmod tempor <br><br>
+            </div>
+        </div>
+
+
+    </div>
+{% endblock %}
