@@ -18,10 +18,11 @@ class LoginView(FormView):
         user_data = form.cleaned_data
         user = authenticate(username=user_data['username'], password=user_data['password'])
         if user is not None:
+            print(user.id)
             login(self.request, user)
             messages.success(self.request, 'You are now logged in.', 'success')
-            self.request.session['user'] = user.id
-            return redirect('accounts:profile')
+
+            return redirect('accounts:profile', username=form.cleaned_data['username'])
         messages.error(self.request, 'Invalid username or password.', 'danger')
         return redirect('accounts:login')
 
