@@ -26,8 +26,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-# Application definition
-
 INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.admin',
@@ -36,16 +34,18 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # My APPS
-
+    # My Apps
+    'accounts.apps.AccountsConfig',
     'posts.apps.PostConfig',
     'home.apps.HomeConfig',
-    'accounts.apps.AccountsConfig',
 
-    # THIRD PARTY
     'bootstrap5',
-
 ]
+# Application definition
+
+
+##### Custom User
+AUTH_USER_MODEL = 'accounts.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -132,6 +132,3 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-##### Custom User
-AUTH_USER_MODEL = 'accounts.User'
