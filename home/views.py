@@ -10,5 +10,6 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['settings'] = WeblogSettings.objects.first()
-        context['posts'] = Post.objects.all()
+        context['features_posts'] = Post.objects.filter(feature_post=True)
+        context['other_posts'] = Post.objects.filter(feature_post=False)
         return context

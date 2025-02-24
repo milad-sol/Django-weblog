@@ -44,43 +44,49 @@
 
 <!-- End blocks of weblog settings app -->
 
-{% block post_list %}
+{% block post_hot %}
 
 
-    <div class="col-lg-9">
-        {% for post in posts %}
-            {% if post.is_hot_post %}
-                <h2 class="fw-bold">🔥 Hot Posts</h2>
-                <hr>
-                <div class="card mb-4 border-danger">
-                    <img src="{{ post.image.url }}" class="card-img-top" alt="Hot Post 1" >
-                    <div class="card-body">
-                        <div class="small text-muted">{{ post.created }}</div>
-                        <div class="small text-muted">category: <a
-                                class="text-bold ">{{ post.categories }}</a></div>
-                        <h2 class="card-title text-danger">{{ post.title }}</h2>
-                        <p class="card-text">{{ post.content|truncatewords:30 }}</p>
-                        <a href="{{ post.get_absolute_url }}" class="btn btn-danger">Read more →</a>
-                    </div>
-                </div>
-            {% else %}
-                <!-- Other Posts Section -->
-                <h2 class="fw-bold mt-5">📌 Other Posts</h2>
-                <hr>
-                <div class="card mb-4">
-                    <img src="{{ post.image.url }}" class="card-img-top" alt="Other Post 1">
-                    <div class="card-body">
-                        <div class="small text-muted">{{ post.created }}</div>
-                        <div class="small text-muted">category: <a
-                                class="text-bold ">{{ post.categories }}</a></div>
-                        <h2 class="card-title">{{ post.title }}</h2>
-                        <p class="card-text">{{ post.content|truncatewords:30 }}</p>
-                        <a href="{{ post.get_absolute_url }}" class="btn btn-primary">Read more →</a>
-                    </div>
-                </div>
-            {% endif %}
-        {% endfor %}
-    </div>
+    <h2 class="fw-bold">🔥 Hot Posts</h2>
+    <hr>
+    {% for post in features_posts %}
+        <hr>
+        <div class="card mb-4 border-danger">
+            <img src="{{ post.image.url }}" class="card-img-top" alt="Hot Post 1">
+            <div class="card-body">
+                <div class="small text-muted">{{ post.created }}</div>
+                <div class="small text-muted">category: <a
+                        class="text-bold ">{{ post.categories }}</a></div>
+                <h2 class="card-title text-danger">{{ post.title }}</h2>
+                <p class="card-text">{{ post.content|truncatewords:30 }}</p>
+                <a href="{{ post.get_absolute_url }}" class="btn btn-danger">Read more →</a>
+            </div>
+        </div>
 
+    {% endfor %}
+{% endblock %}
+<!-- Other Posts Section -->
+
+{% block other %}
+    <h2 class="fw-bold mt-5">📌 Other Posts</h2>
+    <hr>
+    {% for post in other_posts %}
+        <div class="card mb-4">
+            <img src="{{ post.image.url }}" class="card-img-top" alt="Other Post 1">
+            <div class="card-body">
+                <div class="small text-muted">{{ post.created }}</div>
+                <div class="small text-muted">category: <a
+                        class="text-bold ">{{ post.categories }}</a></div>
+                <h2 class="card-title">{{ post.title }}</h2>
+                <p class="card-text">{{ post.content|truncatewords:30 }}</p>
+                <a href="{{ post.get_absolute_url }}" class="btn btn-primary">Read more →</a>
+            </div>
+        </div>
+
+    {% endfor %}
 
 {% endblock %}
+
+
+
+
