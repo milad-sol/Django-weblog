@@ -42,6 +42,10 @@ class Post(models.Model):
     feature_post = models.BooleanField(default=False, blank=True, null=True)
     updated = models.DateTimeField(auto_now=True)
 
+
+
+
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)

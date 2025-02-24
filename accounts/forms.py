@@ -22,7 +22,7 @@ class UserCreationForm(forms.ModelForm):
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
-        user_in_database = User.objects.filter(username__iexact=username)
+        user_in_database = User.objects.get(username__iexact=username)
         if user_in_database:
             raise ValidationError('Username already exists')
         return username
@@ -60,15 +60,15 @@ class UserChangeForm(forms.ModelForm):
 # Create Register form
 
 class UserRegistrationForm(forms.ModelForm):
-    password1 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     confirm_password = forms.CharField(label='Password confirmation',
                                        widget=forms.PasswordInput(attrs={'autofocus': True, 'class': 'form-control'}))
 
     class Meta:
         model = User
-        fields = ['full_name', 'username', 'phone_number', 'email', 'password1', 'confirm_password']
+        fields = ['full_name', 'username', 'phone_number', 'email', 'password', 'confirm_password']
         widgets = {
-            'password1': forms.PasswordInput(attrs={'class': 'form-control'}),
+            'password': forms.PasswordInput(attrs={'class': 'form-control'}),
             'confirm_password': forms.PasswordInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
             'full_name': forms.TextInput(attrs={'class': 'form-control'}),
@@ -78,9 +78,9 @@ class UserRegistrationForm(forms.ModelForm):
         }
 
     def clean_confirm_password(self):
-        password1 = self.cleaned_data.get('password1')
+        password = self.cleaned_data.get('password')
         confirm_password = self.cleaned_data.get('confirm_password')
-        if password1 and confirm_password and password1 != confirm_password:
+        if password and confirm_password and password != confirm_password:
             raise ValidationError('Passwords do not match')
         return confirm_password
 
@@ -104,6 +104,13 @@ class UserRegistrationForm(forms.ModelForm):
         if user_in_database:
             raise ValidationError('Username already exists')
         return username
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data.get('password'))
+        if commit:
+            user.save()
+        return user
 
 
 class LoginForm(forms.Form):

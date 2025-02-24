@@ -7,12 +7,23 @@
                     <a class="nav-link" href="{% url 'home:home' %}">Home</a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'accounts:register' %}">Register</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'accounts:login' %}">Login</a>
-                </li>
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'accounts:profile' user.username %}">profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'accounts:logout' %}">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'accounts:register' %}">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'accounts:login' %}">Login</a>
+                    </li>
+                {% endif %}
+
+
             </ul>
         </div>
     </div>

@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
-from django.views.generic import TemplateView, View, FormView, ListView
+from django.views.generic import TemplateView, View, FormView
 
 from posts.models import Post
 from .forms import UserRegistrationForm, LoginForm
@@ -12,25 +12,23 @@ from django.contrib.auth import login, logout, authenticate
 # Create your views here.
 
 
-class LoginView(FormView):
+class UserLoginView(FormView):
     template_name = 'accounts/login.html'
     form_class = LoginForm
-    model = User
 
     def form_valid(self, form):
-        user_data = form.cleaned_data
-        user = authenticate(username=user_data['username'], password=user_data['password'])
+        user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
+
         if user is not None:
-            print(user.id)
             login(self.request, user)
             messages.success(self.request, 'You are now logged in.', 'success')
-
             return redirect('accounts:profile', username=form.cleaned_data['username'])
+
         messages.error(self.request, 'Invalid username or password.', 'danger')
         return redirect('accounts:login')
 
 
-class RegisterView(View):
+class UserRegisterView(View):
     template_name = 'accounts/register.html'
     class_form = UserRegistrationForm
 
@@ -50,7 +48,7 @@ class RegisterView(View):
         return render(request, self.template_name, {'form': form})
 
 
-class ProfileView(LoginRequiredMixin, TemplateView):
+class UserProfileView(LoginRequiredMixin, TemplateView):
     template_name = 'accounts/profile.html'
 
     def get_context_data(self, **kwargs):
@@ -58,3 +56,12 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         context['user'] = User.objects.get(id=self.request.user.id)
         context['user_post'] = Post.objects.filter(author=self.request.user)
         return context
+
+
+class UserLogoutView(LoginRequiredMixin, View):
+
+    def get(self, request):
+        logout(request)
+        messages.success(request, 'You are now logged out.', 'success')
+
+        return redirect('accounts:login')

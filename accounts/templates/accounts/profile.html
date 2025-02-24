@@ -32,7 +32,7 @@
         <!-- Center: User Posts -->
 
         <div class="posts-section ">
-            <a href="">
+            <a href="{% url 'posts:post-create' user.username %}">
                 <button class="mb-4 btn btn-success text-bold">create a post</button>
             </a>
             {% for post in user_post %}
