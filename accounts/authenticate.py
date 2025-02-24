@@ -7,7 +7,7 @@ from .models import User
 class UserBackend(BaseBackend):
     def authenticate(self, request, username=None, password=None):
         try:
-            user = User.objects.get(username=username)
+            user = User.objects.get(Q(username=username) | Q(email=username))
 
             if user.check_password(password):
                 return user
