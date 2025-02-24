@@ -18,7 +18,9 @@ class UserLoginView(FormView):
 
     def form_valid(self, form):
         user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
-
+        print("=" * 100)
+        print(user)
+        print("=" * 100)
         if user is not None:
             login(self.request, user)
             messages.success(self.request, 'You are now logged in.', 'success')

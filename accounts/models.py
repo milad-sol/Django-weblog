@@ -6,8 +6,8 @@ from .manager import UserManager
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True, max_length=255)
     full_name = models.CharField(max_length=255)
-    phone_number = models.CharField(max_length=255, unique=True)
-    username = models.CharField(max_length=255, unique=True)
+    phone_number = models.CharField(max_length=11, unique=True)
+    username = models.CharField(max_length=50, unique=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)

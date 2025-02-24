@@ -62,7 +62,7 @@ class UserChangeForm(forms.ModelForm):
 class UserRegistrationForm(forms.ModelForm):
     password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     confirm_password = forms.CharField(label='Password confirmation',
-                                       widget=forms.PasswordInput(attrs={'autofocus': True, 'class': 'form-control'}))
+                                       widget=forms.PasswordInput(attrs={ 'class': 'form-control'}))
 
     class Meta:
         model = User
