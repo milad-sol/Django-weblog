@@ -1,103 +1,362 @@
-/* Custom Styles */
+/* style.css */
 body {
-    background-color: #f8f9fa;
+    background-color: #f5f6fa;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.container {
-    max-width: 1600px;
-    margin-top: 2rem;
-}
-
-.card {
-    border: none;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s;
-    }
-.card:hover {
-    transform: translateY(-5px);
-}
-
-.card-header {
-    background: linear-gradient(45deg, #007bff, #00b4db);
+.sidebar {
+    background: linear-gradient(180deg, #2c3e50 0%, #3498db 100%);
     color: white;
-    font-weight: 500;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    padding: 20px;
+    border-radius: 0 20px 20px 0;
+}
+
+.sidebar h5 {
+    color: #ecf0f1;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 10px;
+}
+
+.search-bar {
+    border-radius: 25px;
+    border: none;
+    padding: 12px 20px;
+}
+
+.category-list {
+    background: transparent !important;
+    border: none;
+}
+
+.category-list .list-group-item {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: none;
+    margin-bottom: 5px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.category-list .list-group-item:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateX(5px);
+}
+
+.news-card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.news-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.hot-news {
+    background: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+}
+
+.profile-card {
+    border-radius: 15px;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.user-info-sidebar {
+    background: #fff;
+    border-radius: 20px 0 0 20px;
+    padding: 20px;
+    box-shadow: -4px 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.login-card, .register-card {
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    background: #fff;
 }
 
 .btn-primary {
-    background: linear-gradient(45deg, #007bff, #00b4db);
+    background: #3498db;
     border: none;
-    padding: 8px 20px;
-    transition: all 0.3s;
+    border-radius: 25px;
+    padding: 10px 20px;
+    transition: all 0.3s ease;
 }
 
 .btn-primary:hover {
-    transform: scale(1.05);
-    background: linear-gradient(45deg, #0056b3, #0081ad);
+    background: #2980b9;
+    transform: translateY(-2px);
 }
 
-.categories-list a {
-    color: #333;
-    transition: color 0.3s;
+/* Add to existing style.css */
+
+/* Button styling for Delete */
+.btn-danger {
+    background: #e74c3c;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    transition: all 0.3s ease;
 }
 
-.categories-list a:hover {
-    color: #007bff;
-    text-decoration: none;
+.btn-danger:hover {
+    background: #c0392b;
+    transform: translateY(-2px);
 }
 
-.about-section {
-    background: #fff;
-    border-radius: 10px;
-    padding: 1.5rem;
+/* Post page specific */
+.post-container {
+    max-width: 800px;
+    margin: 0 auto;
 }
 
-.sidebar-sticky {
-
-    position: sticky;
-    top: 20px; /* Distance from top when it starts sticking */
-    height: fit-content; /* Ensures it doesn't stretch */
+.news-card .card-body h2 {
+    margin-bottom: 15px;
+    color: #2c3e50;
 }
 
-.navbar-brand {
-    margin-right: 1rem; /* Reduced margin to keep it close to menu */
+.news-card .text-muted {
+    font-size: 0.9rem;
 }
 
-.navbar .container {
-    padding-left: 0; /* Remove left padding to shift brand leftmost */
+/* Add to existing style.css */
+
+/* Adjust news card spacing */
+.news-card {
+    margin-bottom: 20px; /* Consistent spacing */
 }
 
-.profile-container {
-    max-width: 1200px;
-    margin: 20px auto;
+.hot-news .row {
+    margin: -10px; /* Negative margin to offset card padding */
+}
+
+.hot-news .col-md-3 {
+    padding: 10px; /* Add padding to compensate for negative margin */
+}
+
+.row {
+    margin: -10px; /* Consistent spacing for all rows */
+}
+
+.col-md-3 {
+    padding: 10px; /* Consistent padding for all columns */
+}
+
+.card-body {
+    padding: 15px; /* Slightly reduced padding for better fit */
+}
+
+.card-text {
+    font-size: 0.9rem; /* Slightly smaller text for better fit */
+}
+
+/* Add to existing style.css */
+
+/* Adjust card body layout */
+.card-body {
+    padding: 15px;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    gap: 20px;
 }
 
-.user-info, .posts-section, .profile-picture-section {
+.card-text {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    flex-grow: 1;
+}
+
+.btn-sm {
+    padding: 5px 15px;
+    font-size: 0.875rem;
+}
+
+.small.text-muted {
+    font-size: 0.8rem;
+    line-height: 1.2;
+}
+
+/* Add to existing style.css */
+
+/* Ensure content area has proper padding */
+.col-md-9.py-4 {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+/* Adjust sidebar height for consistency */
+.sidebar {
+    height: calc(100vh - 66px); /* Match home page with navbar */
+    position: sticky;
+    top: 66px; /* Navbar height */
+}
+
+/* Add to existing style.css */
+
+/* Specific styling for post page image */
+.post-page-img {
+    max-height: 300px; /* Smaller height */
+    width: 100%; /* Full width of container */
+    object-fit: cover; /* Keeps aspect ratio */
+    border-radius: 15px 15px 0 0; /* Maintains rounded corners */
+}
+
+/* Add to existing style.css */
+
+/* Make the image clickable */
+.post-page-img {
+    max-height: 300px; /* Smaller size as previously set */
+    width: 100%;
+    object-fit: cover;
+    border-radius: 15px 15px 0 0;
+    cursor: pointer; /* Indicates it's clickable */
+    transition: opacity 0.3s ease;
+}
+
+.post-page-img:hover {
+    opacity: 0.9; /* Subtle hover effect */
+}
+
+/* Modal styling */
+.modal-content {
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.modal-body {
+    padding: 0;
+}
+
+.modal-body img {
+    border-radius: 10px;
+    width: 100%;
+    height: auto;
+}
+
+.modal-footer {
+    border-top: none;
+    justify-content: center;
+}
+
+.btn-secondary {
+    background: #6c757d;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
+    transform: translateY(-2px);
+}
+/* Add to existing style.css */
+
+/* Middle section post list */
+.post-list .card {
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.post-list .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.post-list .card-img {
+    max-height: 100px; /* Small image size */
+    object-fit: cover;
+    border-radius: 10px 0 0 10px; /* Rounded left corners */
+}
+
+.post-list .card-body {
     padding: 15px;
 }
 
-.user-info {
-    flex: 1;
+.post-list .card-title {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
 }
 
-.posts-section {
-    flex: 2;
+.post-list .card-text {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
 }
 
-.profile-picture-section {
-    flex: 1;
-    text-align: center;
+.post-list .btn-sm {
+    padding: 5px 15px;
+    font-size: 0.875rem;
 }
 
-.profile-picture {
+/* Right sidebar adjustments */
+.user-info-sidebar {
+    background: #fff;
+    border-radius: 20px 0 0 20px;
+    padding: 20px;
+    box-shadow: -4px 0 15px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 66px; /* Adjust for navbar */
+    height: calc(100vh - 66px); /* Match sidebar height */
+}
+
+.user-info-sidebar img {
     width: 150px;
     height: 150px;
-    border-radius: 50%;
+    object-fit: cover;
 }
 
-.post {
-    margin-bottom: 20px;
+.user-info-sidebar .small {
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+/* Add to existing style.css */
+
+/* Create post form styling */
+.card.p-4 {
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.form-label {
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+.form-control, .form-select {
+    border-radius: 10px;
+    border: 1px solid #dee2e6;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+textarea.form-control {
+    resize: vertical; /* Allows vertical resizing only */
+}
+
+.btn-primary {
+    background: #3498db;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: #2980b9;
+    transform: translateY(-2px);
 }

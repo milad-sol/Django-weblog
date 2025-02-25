@@ -4,110 +4,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        {% block title %}{% endblock %}
-    </title>
+    <title>My Weblog</title>
 
-    {% block seo %}{% endblock %}
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
     {% load bootstrap5 %}
     {% bootstrap_css %}
     {% bootstrap_javascript %}
-    <link rel="stylesheet" href="{% static 'css/main.css' %}">
 </head>
 <body>
+<!-- Navbar -->
 {% include 'include/navbar.html' %}
 {% include 'include/messages.html' %}
 
-<!-- Header -->
-{% block header %}{% endblock %}
-
-<!-- Main Content -->
-
-<div class="container">
+<div class="container-fluid mt-4">
     <div class="row">
-
-        <!-- Blog Entries Column -->
-
-        <div class="col-lg-9">
-            {% block login %}{% endblock %}
-            {% block register %}
-
-            {% endblock %}
-            {% block create_post %}
-
-            {% endblock %}
-            {% block hot_posts %}{% endblock %}
-            {% block other_posts %}{% endblock %}
-            {% block profile %}{% endblock %}
-        </div>
-        {% block blog_detail %}{% endblock %}
-
         <!-- Sidebar -->
-        <!-- Sidebar -->
-
-        <div class="col-lg-3">
-            <!-- Search Widget -->
-            <div class="card mb-4">
-                <div class="card-header">Search</div>
-                <div class="card-body">
-                    <div class="input-group">
-                        <input class="form-control" type="text"
-                               placeholder="Enter search term..."
-                               aria-label="Enter search term..."
-                               aria-describedby="button-search">
-                        <button class="btn btn-primary"
-                                id="button-search"
-                                type="button">
-                            <i class="fas fa-search me-1"></i>Search
-                        </button>
-                    </div>
+        {% block sidebar %}
+            <div class="col-md-3 sidebar">
+                <div class="mb-4">
+                    <input type="text" class="form-control search-bar" placeholder="Search...">
+                </div>
+                <div class="mb-4">
+                    <h5>Categories</h5>
+                    <ul class="list-group category-list">
+                        <li class="list-group-item">Technology</li>
+                        <li class="list-group-item">Sports</li>
+                        <li class="list-group-item">News</li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>About</h5>
+                    <p class="small">Welcome to my weblog where we share the latest news and updates with a modern
+                        twist.</p>
                 </div>
             </div>
+        {% endblock %}
 
-            <!-- Categories Widget -->
-            <div class="card mb-4">
-                <div class="card-header">Categories</div>
-                <div class="card-body">
-                    <div class="row categories-list">
-                        <div class="col-sm-6">
-                            <ul class="list-unstyled mb-0">
-                                <li><a href="#">Technology</a></li>
-                                <li><a href="#">Design</a></li>
-                                <li><a href="#">Culture</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-sm-6">
-                            <ul class="list-unstyled mb-0">
-                                <li><a href="#">Travel</a></li>
-                                <li><a href="#">Food</a></li>
-                                <li><a href="#">Lifestyle</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <!-- Main Content -->
+        {% block main %}
 
-            <!-- About Widget -->
-            <div class="card mb-4 about-section">
-                <div class="card-header">About</div>
-                <div class="card-body">
-                    <p class="text-muted">
-                        Welcome to my blog! Here you'll find articles about various topics that interest me.
-                        Feel free to explore and leave comments on the posts.
-                    </p>
-                    <small class="text-muted">Est. 2025</small>
-                </div>
-            </div>
-        </div>
+        {% endblock %}
     </div>
 </div>
 
-<!-- Footer -->
-{% block footer %}
 
-{% endblock %}
-
-<!-- Font Awesome for icons (add to head if you want to use the search icon) -->
-<script src="https://kit.fontawesome.com/your-kit-id.js" crossorigin="anonymous"></script>
 </body>
 </html>

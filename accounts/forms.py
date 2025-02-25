@@ -60,20 +60,24 @@ class UserChangeForm(forms.ModelForm):
 # Create Register form
 
 class UserRegistrationForm(forms.ModelForm):
-    password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    password = forms.CharField(label='Password', widget=forms.PasswordInput(
+        attrs={'class': 'form-control', 'placeholder': 'Enter your Password'}))
     confirm_password = forms.CharField(label='Password confirmation',
-                                       widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+                                       widget=forms.PasswordInput(
+                                           attrs={'class': 'form-control',
+                                                  'placeholder': 'Enter your Confirm Password'}))
 
     class Meta:
         model = User
         fields = ['full_name', 'username', 'phone_number', 'email', 'password', 'confirm_password']
         widgets = {
-            'password': forms.PasswordInput(attrs={'class': 'form-control'}),
-            'confirm_password': forms.PasswordInput(attrs={'class': 'form-control'}),
-            'email': forms.EmailInput(attrs={'class': 'form-control'}),
-            'full_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'phone_number': forms.TextInput(attrs={'class': 'form-control'}),
-            'username': forms.TextInput(attrs={'class': 'form-control'}),
+            # 'password': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Enter your Password'}),
+            # 'confirm_password': forms.PasswordInput(
+            #     attrs={'class': 'form-control', 'placeholder': 'Enter your Confirm Password'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Enter your Email'}),
+            'full_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your Full Name'}),
+            'phone_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your Phone Number'}),
+            'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your Username'}),
 
         }
 

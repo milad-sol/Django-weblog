@@ -1,75 +1,54 @@
 {% extends 'main.html' %}
-<!-- Main Content -->
-{% block blog_detail %}
 
-    <!-- Blog Post Column -->
-    <div class="col-lg-8">
-        <div class="card mb-4">
-            {% if request.user == post.author %}
-                <div class="row ">
-                    <div class="col">
-                        <a href="{% url 'posts:post-delete' post.slug %}" class="m-8">
-                            <button class="btn btn-danger ">Delete this post</button>
-                        </a>
-                    </div>
-                    <div class="col">
-                        <a href="">
-                            <button class="btn btn-info">Update this post</button>
-                        </a>
-                    </div>
-                </div>
-            {% endif %}
-            <hr>
-            <img src="{{ post.featured_image.url }}" class="card-img-top" alt="Post Title">
-            <div class="card-body">
-                <h1 class="card-title">{{ post.title }}</h1>
-                <div class="post-meta mb-3">
-                    <span>Posted on {{ post.created }}</span>
-                    <span> by {{ post.author }}</span>
-                    <span> in <a href="#" class="text-decoration-none">{{ post.categories }}</a></span>
-                </div>
-                <div class="post-content">
-                    <p>{{ post.content }}</p>
-                </div>
-                <span>Tags : <a href="">{{ post.keywords }}</a></span>
-            </div>
-        </div>
+{% block main %}
+    <div class="col-md-9 py-4">
+        <!-- Post Section -->
+        <div class="news-card mb-4">
 
-        <!-- Comments Section -->
-        <div class="card mb-4">
-            <div class="card-header">Comments</div>
+            <img src="{{ post.featured_image.url }}" class="card-img-top post-page-img" alt="Post Image"
+                 data-bs-toggle="modal" data-bs-target="#imageModal">
             <div class="card-body">
-                <div class="mb-3">
-                    <strong>Jane Smith</strong>
-                    <small class="text-muted">February 22, 2025 14:30</small>
-                    <p>Great article! Really enjoyed reading this.</p>
-                </div>
-                <div class="mb-3">
-                    <strong>Bob Johnson</strong>
-                    <small class="text-muted">February 22, 2025 15:45</small>
-                    <p>Interesting perspective. Thanks for sharing!</p>
+                <div class="card-body">
+                    <h2 class="card-title">{{ post.title }}</h2>
+                    <p class="text-muted mb-3">Posted by {{ post.author }} | {{ post.created_at|timesince }} ago</p>
+                    <p class="card-text">{{ post.content }}</p>
+                    {% if request.user.is_authenticated == post.author %}
+                    	<div class="d-flex justify-content-end gap-2 mt-4">
+                        <button class="btn btn-danger">Delete Post</button>
+                        <button class="btn btn-primary">Update Post</button>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
-        </div>
 
-        <!-- Comment Form -->
-        <div class="card mb-4">
-            <div class="card-header">Leave a Comment</div>
-            <div class="card-body">
-                <form method="post" action="#">
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="name" name="name" required>
+            <!-- Comments Section -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h3 class="card-title mb-4">Comments</h3>
+
+                    <!-- Existing Comments -->
+                    <div class="mb-4">
+                        <div class="comment mb-3 p-3 bg-light rounded">
+                            <p class="mb-1"><strong>Jane Smith</strong> <small class="text-muted">1 hour ago</small></p>
+                            <p>Great post! Really informative content.</p>
+                        </div>
+                        <div class="comment mb-3 p-3 bg-light rounded">
+                            <p class="mb-1"><strong>Mike Johnson</strong> <small class="text-muted">30 minutes
+                                ago</small>
+                            </p>
+                            <p>Thanks for sharing this news!</p>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="comment" class="form-label">Comment</label>
-                        <textarea class="form-control" id="comment" name="comment" rows="3" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit Comment</button>
-                </form>
+
+                    <!-- Comment Form -->
+                    <form>
+                        <div class="mb-3">
+                            <textarea class="form-control" rows="3" placeholder="Write your comment..."
+                                      required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Post Comment</button>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-
-
 {% endblock %}

@@ -1,59 +1,67 @@
 {% extends 'main.html' %}
 {% load static %}
+<div class="container-fluid mt-4">
+    <div class="row">
+        <!-- Left Sidebar (Same as Home) -->
+        {% block main %}
 
-{% block profile %}
 
-    <div class="profile-container">
-        <!-- Left: User Info -->
-
-        <div class="card mb-4">
-            <div class="card-header">{{ user.full_name |capfirst }}</div>
-            <div class="card-body">
-                <div class="row categories-list">
-                    <div class="col-sm-12">
-                        <div class="user-info">
-                            <a class="profile-picture-section">
-                                <img src="{% static 'images/profile/3135715.png' %}" alt="Profile Picture"
-                                     class="profile-picture ">
-                            </a>
-                            <br><br>
-                            <label class="">Full Name :</label> {{ user.full_name }}<br><br>
-                            <label>Username:</label> {{ user.username }}<br><br>
-                            <label>Phone:</label> {{ user.phone_number }}<br><br>
-                            <label>Email:</label> {{ user.email }}<br><br>
-                            <a href="/accounts/profile/edit/">Edit Profile</a>
+            <!-- Middle Section (User's Posts) -->
+            <div class="col-md-6 py-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h2>My Posts</h2>
+                    {% for post in user_post %}
+                        {% if request.user == post.author %}
+                            <a href="{% url 'posts:post-create' %}" class="btn btn-primary">Create New Post</a>
+                        {% endif %}
                         </div>
+                        <div class="post-list">
 
+                        <div class="card mb-3">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <img src="{{ post.featured_image.url }}" class="img-fluid rounded-start"
+                                         alt="Post 1">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ post.title }}</h5>
+                                        <p class="card-text">{{ post.content|truncatewords:50 }}</p>
+                                        <p class="card-text"><small class="text-muted">Category: <a
+                                                href="">{{ post.categories }}</a></small></p>
+                                        <p class="card-text"><small class="text-muted">{{ post.created_at|timesince }}
+                                            ago</small></p>
+                                        <a href="{{ post.get_absolute_url }}" class="btn btn-primary btn-sm">Read
+                                            More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+
+                    <!-- Add more posts as needed -->
                     </div>
-
-                </div>
             </div>
-        </div>
-        <!-- Center: User Posts -->
 
-        <div class="posts-section ">
-            <a href="{% url 'posts:post-create' user.username %}">
-                <button class="mb-4 btn btn-success text-bold">create a post</button>
-            </a>
-            {% for post in user_post %}
-                <div class="post ">
+            <!-- Right Sidebar (User Profile) -->
+            <div class="col-md-3 user-info-sidebar">
+                <h5>User Profile</h5>
 
-                    <div>
-                        <h2>{{ post.title }}</h2>
+                <div class="text-center">
+                    <img src="{% static 'images/profile/3135715.png' %}" class="rounded-circle mb-3"
+                         alt="Profile Picture">
+                    <h6>{{ user_information.full_name }}</h6>
+                    <p class="small"><strong>Email:</strong> {{ user_information.email }}</p>
+                    <p class="small"><strong>Last Login:</strong> {{ user_information.last_login|timesince }}</p>
+                    <p class="small"><strong>Posts:</strong> {{ user_post|length }}</p>
 
-                        <p>{{ post.content|truncatewords:300 }}</p>
-                        {#                        TODO:like the category#}
-                        <p>
-                        <p>category: <a href="">{{ post.categories }}</a></p>
-                        <a href="{{ post.get_absolute_url }}">
-                            <button class="btn btn-info">read more</button>
-                        </a>
-                        <hr>
-                    </div>
+                    <p class="small"><strong>Bio:</strong> Passionate blogger</p>
+                    <button class="btn btn-primary mt-2">Edit Profile</button>
                 </div>
-            {% endfor %}
-        </div>
 
 
-    </div>
-{% endblock %}
+            </div>
+            </div>
+        {% endblock %}
+</div>

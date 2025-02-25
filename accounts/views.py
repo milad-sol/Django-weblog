@@ -52,7 +52,7 @@ class UserProfileView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['user'] = User.objects.get(id=self.request.user.id)
+        context['user_information'] = User.objects.get(id=self.request.user.id)
         context['user_post'] = Post.objects.filter(author=self.request.user)
         return context
 

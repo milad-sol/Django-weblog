@@ -1,48 +1,48 @@
-{% extends 'main.html' %}
-<!-- Start blocks of weblog settings app -->
-{% block title %}
-    {{ settings.title }}
-{% endblock %}
-
-{% block seo %}
-    <!-- SEO Meta Tags -->
-    <meta name="description"
-          content="{{ settings.description }}">
-    <meta name="keywords"
-          content="{{ keywords }}">
-    <meta name="author" content="{{ settings.author }}">
-    <meta name="robots" content="index, follow">
-
-    <!-- Open Graph Meta Tags (for social sharing) -->
-    <meta property="og:title" content="{{ settings.og_title }}">
-    <meta property="og:description"
-          content="{{ settings.og_description }}">
-
-    <meta property="og:url" content="{{ settings.og_url }}">
-    <meta property="og:type" content="website">
-{% endblock %}
-
-{% block header %}
-    <header class="py-5 bg-light border-bottom mb-4">
-        <div class="container">
-            <div class="text-center">
-                <h1 class="fw-bolder">{{ settings.title }}</h1>
-                <p class="lead mb-0">{{ settings.subtitle }}</p>
-            </div>
-        </div>
-    </header>
-{% endblock %}
-
-
-{% block footer %}
-    <footer class="py-4 bg-dark text-white-50 mt-5">
-        <div class="container text-center">
-            <small>&copy;{{ settings.footer }}</small>
-        </div>
-    </footer>
-{% endblock %}
-
-<!-- End blocks of weblog settings app -->
+{#{% extends 'main.html' %}#}
+{#<!-- Start blocks of weblog settings app -->#}
+{#{% block title %}#}
+{#    {{ settings.title }}#}
+{#{% endblock %}#}
+{##}
+{#{% block seo %}#}
+{#    <!-- SEO Meta Tags -->#}
+{#    <meta name="description"#}
+{#          content="{{ settings.description }}">#}
+{#    <meta name="keywords"#}
+{#          content="{{ keywords }}">#}
+{#    <meta name="author" content="{{ settings.author }}">#}
+{#    <meta name="robots" content="index, follow">#}
+{##}
+{#    <!-- Open Graph Meta Tags (for social sharing) -->#}
+{#    <meta property="og:title" content="{{ settings.og_title }}">#}
+{#    <meta property="og:description"#}
+{#          content="{{ settings.og_description }}">#}
+{##}
+{#    <meta property="og:url" content="{{ settings.og_url }}">#}
+{#    <meta property="og:type" content="website">#}
+{#{% endblock %}#}
+{##}
+{#{% block header %}#}
+{#    <header class="py-5 bg-light border-bottom mb-4">#}
+{#        <div class="container">#}
+{#            <div class="text-center">#}
+{#                <h1 class="fw-bolder">{{ settings.title }}</h1>#}
+{#                <p class="lead mb-0">{{ settings.subtitle }}</p>#}
+{#            </div>#}
+{#        </div>#}
+{#    </header>#}
+{#{% endblock %}#}
+{##}
+{##}
+{#{% block footer %}#}
+{#    <footer class="py-4 bg-dark text-white-50 mt-5">#}
+{#        <div class="container text-center">#}
+{#            <small>&copy;{{ settings.footer }}</small>#}
+{#        </div>#}
+{#    </footer>#}
+{#{% endblock %}#}
+{##}
+{#<!-- End blocks of weblog settings app -->#}
 {##}
 {#{% block post_hot %}#}
 {##}
@@ -87,53 +87,109 @@
 {##}
 {#{% endblock %}#}
 {##}
+{##}
+{##}
+{##}
+{##}
+{#    <!-- Hot Posts Section -->#}
+{##}
+{#    {% block hot_posts %}#}
+{##}
+{#        <div class="row mb-5">#}
+{#            <h2 class="mb-4">🔥 Hot Posts</h2>#}
+{#            <hr>#}
+{#            {% for post in hot_posts %}#}
+{#                <div class="col-lg-3 col-md-6 mb-4">#}
+{#                    <div class="card post-card">#}
+{#                        <img src="{{ post.featured_image.url }}" class="card-img-top" alt="{{ post.title }}">#}
+{#                        <div class="card-body">#}
+{#                            <h5 class="card-title">{{ post.title }}</h5>#}
+{#                            <p class="card-text">{{ post.content|truncatewords:15 }}</p>#}
+{#                            <a href="{{ post.get_absolute_url }}" class="btn btn-primary btn-sm">Read More</a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            {% empty %}#}
+{#                <div class="col-12"><p>No hot posts available.</p></div>#}
+{#            {% endfor %}#}
+{#        </div>#}
+{#    {% endblock %}#}
+{#    <!-- Other Posts Section -->#}
+{#    {% block other_posts %}#}
+{#        <h2 class="mb-4">📌 Other Posts</h2>#}
+{#        <hr>#}
+{#        <div class="row">#}
+{#            {% for post in other_posts %}#}
+{#                <div class="col-lg-3 col-md-6 mb-4">#}
+{#                    <div class="card post-card">#}
+{#                        <img src="{{ post.featured_image.url }}" class="card-img-top" alt="{{ post.title }}">#}
+{#                        <div class="card-body">#}
+{#                            <h5 class="card-title">{{ post.title }}</h5>#}
+{#                            <p class="card-text">{{ post.content|truncatewords:15 }}</p>#}
+{#                            <a href="{{ post.get_absolute_url }}" class="btn btn-primary btn-sm">Read More</a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            {% empty %}#}
+{#                <div class="col-12"><p>No other posts available.</p></div>#}
+{#            {% endfor %}#}
+{#        </div>#}
+{#    {% endblock %}#}
+{##}
+{##}
 
 
+{% extends 'main.html' %}
 
+{% block main %}
 
-    <!-- Hot Posts Section -->
-
-    {% block hot_posts %}
-
-        <div class="row mb-5">
-            <h2 class="mb-4">🔥 Hot Posts</h2>
-            <hr>
-            {% for post in hot_posts %}
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="card post-card">
-                        <img src="{{ post.featured_image.url }}" class="card-img-top" alt="{{ post.title }}">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ post.title }}</h5>
-                            <p class="card-text">{{ post.content|truncatewords:15 }}</p>
-                            <a href="{{ post.get_absolute_url }}" class="btn btn-primary btn-sm">Read More</a>
+    <!-- Main Content -->
+    <div class="col-md-9 py-4">
+        <div class="hot-news">
+            <h2>Hot News</h2>
+            <div class="row">
+                {% for breaking_new in breaking_news %}
+                    <div class="col-md-3">
+                        <div class="news-card">
+                            <img src="{{ breaking_new.featured_image.url }}" class="card-img-top" alt="Hot News 1">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ breaking_new.title }}</h5>
+                                <p class="card-text">{{ breaking_new.content|truncatewords:10 }}</p>
+                                <p class="small text-muted mb-2">Category: <a href="">{{ breaking_new.categories }}</a>
+                                    |
+                                    Author: <a href="">{{ breaking_new.author }}</a></p>
+                                <small class="text-muted">{{ breaking_new.created_at|timesince }} ago</small>
+                                <a href="{{ breaking_new.get_absolute_url }}" class="btn btn-primary btn-sm">Read
+                                    More</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% empty %}
-                <div class="col-12"><p>No hot posts available.</p></div>
-            {% endfor %}
+                {% endfor %}
+
+
+            </div>
         </div>
-    {% endblock %}
-    <!-- Other Posts Section -->
-    {% block other_posts %}
-        <h2 class="mb-4">📌 Other Posts</h2>
-        <hr>
+
+        <h2>Other News</h2>
         <div class="row">
-            {% for post in other_posts %}
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="card post-card">
-                        <img src="{{ post.featured_image.url }}" class="card-img-top" alt="{{ post.title }}">
+            {% for other_post in other_posts %}
+                <div class="col-md-3">
+                    <div class="news-card mb-3">
+                        <img src="{{ other_post.featured_image.url }}" class="card-img-top" alt="News 1">
                         <div class="card-body">
-                            <h5 class="card-title">{{ post.title }}</h5>
-                            <p class="card-text">{{ post.content|truncatewords:15 }}</p>
-                            <a href="{{ post.get_absolute_url }}" class="btn btn-primary btn-sm">Read More</a>
+                            <h5 class="card-title">{{ other_post.title }}</h5>
+                            <p class="card-text">{{ other_post.content|truncatewords:10 }}</p>
+                            <p class="small text-muted mb-2">Category: <a href="">{{ other_post.categories }}</a> |
+                                Author: <a href="">{{ other_post.author }}</a></p>
+                            <small class="text-muted">{{ other_post.created_at|timesince }} ago</small>
+                            <a href="{{ other_post.get_absolute_url }}" class="btn btn-primary btn-sm">Read More</a>
                         </div>
                     </div>
                 </div>
-            {% empty %}
-                <div class="col-12"><p>No other posts available.</p></div>
             {% endfor %}
-        </div>
-    {% endblock %}
 
+
+        </div>
+    </div>
+{% endblock %}
 

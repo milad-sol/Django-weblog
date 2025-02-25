@@ -1,12 +1,9 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect, render
-
 from django.urls import reverse_lazy
 from django.utils.text import slugify
-from django.views.decorators.http import require_safe
-from django.views.generic import DetailView, TemplateView, CreateView, View, DeleteView
+from django.views.generic import DetailView, TemplateView, CreateView, View, DeleteView, UpdateView
 
 from posts.models import Post
 
@@ -25,7 +22,13 @@ class PostDetailView(DetailView):
 class CreatePostView(LoginRequiredMixin, CreateView):
     template_name = 'posts/create_new_post.html'
     model = Post
-    fields = ['title', 'content', 'image', 'categories']
+    fields = ['title', 'content', 'featured_image', 'categories']
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user != self.request.user:
+            messages.error(self.request, 'You are not authorized to post this page.', 'danger')
+            return redirect("accounts:profile", slug=self.request.user)
+        return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         data = form.cleaned_data
@@ -42,9 +45,37 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
         user = request.user
         post = Post.objects.get(slug=self.kwargs['slug'])
         if post.author != user:
-            messages.error(request,f'You are not authorized to delete this post.this post belongs to {post.author}', 'danger')
+            messages.error(request, f'You are not authorized to delete this post.this post belongs to {post.author}',
+                           'danger')
             return redirect('accounts:profile', request.user.username)
         return super().dispatch(request, *args, **kwargs)
+
+    def get_success_url(self):
+        return reverse_lazy('accounts:profile', kwargs={'username': self.request.user.username})
+
+
+class PostUpdateView(UpdateView):
+    template_name = 'posts/update_post.html'
+    model = Post
+    fields = ['title', 'content', 'featured_image', 'categories']
+
+    def dispatch(self, request, *args, **kwargs):
+        user = request.user
+        post = Post.objects.get(slug=self.kwargs['slug'])
+        if post.author != user:
+            messages.error(request, 'You are not authorized to edit this post.', 'danger')
+            return redirect('accounts:profile', user.username)
+        return super().dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        data = form.cleaned_data
+        form.instance.author = self.request.user
+        form.instance.slug = slugify(data['title'])
+        form.instance.title = data['title']
+        form.instance.content = data['content']
+        form.instance.featured_image = data['featured_image']
+        form.instance.save()
+        return redirect('posts:post-detail', data['title'])
 
     def get_success_url(self):
         return reverse_lazy('accounts:profile', kwargs={'username': self.request.user.username})

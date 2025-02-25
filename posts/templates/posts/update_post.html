@@ -1,0 +1,12 @@
+{% extends 'main.html' %}
+
+
+{% block hot_posts %}
+    <form action="" method="post" class="form-control">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <input type="submit" class="btn btn-success" value="update">
+    </form>
+{% endblock %}
+

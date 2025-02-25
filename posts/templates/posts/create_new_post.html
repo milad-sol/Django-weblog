@@ -1,22 +1,66 @@
 {% extends 'main.html' %}
-{% block create_post %}
 
 
-    <div class="card mb-4">
-        <h2 class="card-title text-center mb-4">Create New Post</h2>
-        <form method="post" enctype="multipart/form-data">
+{##}
+{#    <div class="card mb-4">#}
+{#        <h2 class="card-title text-center mb-4">Create New Post</h2>#}
+{#        <form method="post" enctype="multipart/form-data">#}
+{##}
+{#                {{ form.as_p }}#}
+{##}
+{##}
+{#            {% csrf_token %}#}
+{##}
+{#            <input type="submit" value="submit" class="btn btn-success">#}
+{#        </form>#}
+{##}
+{#        <br>#}
+{#        <a href="">Back to Profile</a>#}
+{#    </div>#}
+{##}
+{##}
+{#{% endblock %}#}
+<div class="container-fluid mt-4">
+    <div class="row">
+        {% block main %}
 
-                {{ form.as_p }}
 
+            <div class="col-md-7 py-4">
 
-            {% csrf_token %}
+                <!-- Main Content (Create Post Form) -->
 
-            <input type="submit" value="submit" class="btn btn-success">
-        </form>
+                <h2>Create New Post</h2>
+                <div class="card p-4">
+                    <form>
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <div class="mb-3">
+                            <label for="postTitle" class="form-label">Post Title</label>
+                            <p class="form-control" id="postTitle">{{ form.title }}</p>
+                        </div>
+                        <div class="mb-3">
+                            <label for="postCategory" class="form-label">Category</label>
+                            <select class="form-select" id="postCategory" required>
+                                <option value="" disabled selected>Select a category</option>
+                                <option value="technology">Technology</option>
+                                <option value="sports">Sports</option>
+                                <option value="news">News</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="postImage" class="form-label">Post Image</label>
+                            <input type="file" class="form-control" id="postImage" accept="image/*">
+                        </div>
+                        <div class="mb-3">
+                            <label for="postContent" class="form-label">Content</label>
+                            <textarea class="form-control" id="postContent" rows="6"
+                                      placeholder="Write your post content here..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Publish Post</button>
+                    </form>
+                </div>
+            </div>
+            </div>
+            </div>
 
-        <br>
-        <a href="">Back to Profile</a>
-    </div>
-
-
-{% endblock %}
+        {% endblock %}

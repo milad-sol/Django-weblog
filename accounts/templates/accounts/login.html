@@ -1,32 +1,27 @@
 {% extends 'main.html' %}
 
-{% block login %}
-    <div class="container">
-        <div class="row justify-content-center">
-            <!-- Login Form Column -->
-            <div class="col-lg-8">
-                <div class="card mb-4">
-                    <div class="card-header">Login</div>
-                    <div class="card-body">
-                        <h2 class="card-title text-center mb-4">Welcome Back</h2>
-                        <form method="post" action="{% url 'accounts:login' %}">
-                            {% csrf_token %}
-                            {{ form.as_p }}
-                            <div class="d-grid gap-2">
-                                <input class="btn btn-primary" type="submit" value="Login"/>
+{% block main %}
 
-                            </div>
-                        </form>
-                        <p class="text-center mt-3">
-                            Don't have an account? <a href="{% url 'accounts:register' %}" class="text-decoration-none">Register
-                            here</a>
-                        </p>
-                        <p class="text-center">
-                            <a href="#" class="text-decoration-none text-muted">Forgot password?</a>
-                        </p>
-                    </div>
+
+    <div class="col-md-7 ">
+        <div class="login-card">
+            <h3 class="text-center mb-4">Login</h3>
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label">Username OR phone number</label>
+                    {{ form.username }}
                 </div>
-            </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    {{ form.password }}
+                </div>
+                <input type="submit" class="btn btn-primary w-100" value="Login">
+            </form>
+            <p class="text-center mt-3 small"><a href="{% url 'accounts:register' %}">Forgot your
+                password?</a></p>
+            <p class="text-center mt-3 small">Need an account? <a href="{% url 'accounts:register' %}">Register</a></p>
         </div>
     </div>
+
 {% endblock %}
