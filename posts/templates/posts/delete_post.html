@@ -1,0 +1,16 @@
+{% extends 'main.html' %}
+
+
+{% block other_posts %}
+    <form method="post">
+        {% csrf_token %}
+
+        <h4>Are you sure you want to delete
+            <mark>"{{ object }}"</mark>
+            ?
+        </h4>
+        <br>
+        <input type="submit" value="Confirm" class="btn btn-danger">
+    </form>
+
+{% endblock %}

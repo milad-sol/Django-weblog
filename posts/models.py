@@ -49,7 +49,7 @@ class Post(models.Model):
         return super().save(*args, **kwargs)
 
     def __str__(self):
-        return '{} - {}'.format(self.title, self.created_at)
+        return self.title
 
     def get_absolute_url(self):
         return reverse('posts:post-detail', kwargs={'slug': self.slug})

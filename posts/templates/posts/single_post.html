@@ -5,6 +5,21 @@
     <!-- Blog Post Column -->
     <div class="col-lg-8">
         <div class="card mb-4">
+            {% if request.user == post.author %}
+                <div class="row ">
+                    <div class="col">
+                        <a href="{% url 'posts:post-delete' post.slug %}" class="m-8">
+                            <button class="btn btn-danger ">Delete this post</button>
+                        </a>
+                    </div>
+                    <div class="col">
+                        <a href="">
+                            <button class="btn btn-info">Update this post</button>
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+            <hr>
             <img src="{{ post.featured_image.url }}" class="card-img-top" alt="Post Title">
             <div class="card-body">
                 <h1 class="card-title">{{ post.title }}</h1>
