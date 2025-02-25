@@ -2,7 +2,6 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, View, FormView
-
 from posts.models import Post
 from .forms import UserRegistrationForm, LoginForm
 from .models import User
@@ -18,13 +17,11 @@ class UserLoginView(FormView):
 
     def form_valid(self, form):
         user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
-        print("=" * 100)
-        print(user)
-        print("=" * 100)
         if user is not None:
             login(self.request, user)
             messages.success(self.request, 'You are now logged in.', 'success')
-            return redirect('accounts:profile', username=form.cleaned_data['username'])
+
+            return redirect('accounts:profile', user.username)
 
         messages.error(self.request, 'Invalid username or password.', 'danger')
         return redirect('accounts:login')
