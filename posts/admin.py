@@ -7,7 +7,7 @@ from .models import Post, Category
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author', 'slug', 'hot_post', 'created_at', 'updated_at')
+    list_display = ('title', 'author', 'categories', 'slug', 'hot_post', 'created_at', 'updated_at')
     search_fields = ('title',)
     ordering = ('-created_at',)
 

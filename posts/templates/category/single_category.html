@@ -1,0 +1,31 @@
+{% extends 'main.html' %}
+
+{% block main %}
+    <div class="col-md-9 py-4">
+        <h2>{{ category.title|capfirst }}</h2>
+        <div class="row">
+            {% for post in posts %}
+                <div class="col-md-3">
+                    <div class="news-card mb-3">
+                        <img src="{{ post.featured_image.url }}" class="card-img-top" alt="Tech Post 1">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ post.title }}</h5>
+                            <p class="card-text">{{ post.content|truncatewords:7 }}</p>
+                            <p class="small text-muted mb-2">Category: <a
+                                    href="{% url 'posts:single_category' post.categories %}">{{ post.categories }}</a>
+                                |
+                                Author: <a
+                                        href="{% url 'accounts:profile' post.author.username %}">{{ post.author }}</a>
+                            </p>
+                            <small class="text-muted d-block mb-2">{{ post.created_at|timesince }} ago</small>
+                            <a href="{{ post.get_absolute_url }}" class="btn btn-primary btn-sm">Read More</a>
+                        </div>
+                    </div>
+                </div>
+
+            {% endfor %}
+
+
+        </div>
+    </div>
+{% endblock %}

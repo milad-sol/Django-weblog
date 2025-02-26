@@ -11,6 +11,7 @@ class Category(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    # TODO:add a summery about category
     class Meta:
         verbose_name_plural = 'Categories'
         verbose_name = 'Category'
@@ -26,7 +27,7 @@ class Category(models.Model):
         return super().save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('home:home', kwargs={'pk': self.pk})
+        return reverse('posts:post-category-detail', kwargs={'pk': self.title})
 
 
 # Create your models here.

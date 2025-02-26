@@ -155,9 +155,12 @@
                             <div class="card-body">
                                 <h5 class="card-title">{{ breaking_new.title }}</h5>
                                 <p class="card-text">{{ breaking_new.content|truncatewords:10 }}</p>
-                                <p class="small text-muted mb-2">Category: <a href="">{{ breaking_new.categories }}</a>
+                                <p class="small text-muted mb-2">Category: <a
+                                        href="{% url 'posts:single_category' breaking_new.categories.slug %}">{{ breaking_new.categories }}</a>
                                     |
-                                    Author: <a href="">{{ breaking_new.author }}</a></p>
+                                    Author: <a
+                                            href="{% url 'accounts:profile' breaking_new.author.username %}">{{ breaking_new.author }}</a>
+                                </p>
                                 <small class="text-muted">{{ breaking_new.created_at|timesince }} ago</small>
                                 <a href="{{ breaking_new.get_absolute_url }}" class="btn btn-primary btn-sm">Read
                                     More</a>
@@ -179,8 +182,12 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ other_post.title }}</h5>
                             <p class="card-text">{{ other_post.content|truncatewords:10 }}</p>
-                            <p class="small text-muted mb-2">Category: <a href="">{{ other_post.categories }}</a> |
-                                Author: <a href="">{{ other_post.author }}</a></p>
+                            <p class="small text-muted mb-2">Category: <a
+                                    href="{% url 'posts:single_category' other_post.categories.slug %}">{{ other_post.categories }}</a>
+                                |
+                                Author: <a
+                                        href="{% url 'accounts:profile' other_post.author.username %}">{{ other_post.author }}</a>
+                            </p>
                             <small class="text-muted">{{ other_post.created_at|timesince }} ago</small>
                             <a href="{{ other_post.get_absolute_url }}" class="btn btn-primary btn-sm">Read More</a>
                         </div>

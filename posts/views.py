@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.utils.text import slugify
-from django.views.generic import DetailView, CreateView, DeleteView, UpdateView, View, TemplateView
+from django.views.generic import DetailView, CreateView, DeleteView, UpdateView, ListView, TemplateView
 
 from .forms import CreatePostForm
 from posts.models import Post, Category
@@ -78,3 +78,19 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
         return reverse_lazy('accounts:profile', kwargs={'username': self.request.user.username})
 
 
+class PostCategoryListView(ListView):
+    template_name = 'category/categories.html'
+    model = Category
+    context_object_name = 'categories'
+
+
+class PostCategoryDetailView(DetailView):
+    template_name = 'category/single_category.html'
+    model = Category
+    context_object_name = 'category'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['category'] = Category.objects.get(slug=self.kwargs['slug'])
+        context['posts'] = Post.objects.filter(categories=context['category'])
+        return context
