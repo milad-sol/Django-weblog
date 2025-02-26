@@ -27,14 +27,16 @@
                 </div>
                 <div class="mb-4">
                     <h5>Categories</h5>
-                    <ul class="list-group category-list">
-                        <li class="list-group-item"><a href="category-posts.html?cat=technology"
-                                                       class="text-decoration-none text-white">Technology</a></li>
-                        <li class="list-group-item"><a href="category-posts.html?cat=sports"
-                                                       class="text-decoration-none text-white">Sports</a></li>
-                        <li class="list-group-item"><a href="category-posts.html?cat=news"
-                                                       class="text-decoration-none text-white">News</a></li>
-                    </ul>
+                    {% for category in categories %}
+                        <ul class="list-group category-list">
+                            <li class="list-group-item"><a href="#"
+                                                           class="text-decoration-none text-white">{{ category.title }}</a>
+                            </li>
+
+                        </ul>
+                    {% endfor %}
+
+
                 </div>
                 <div>
                     <h5>About</h5>

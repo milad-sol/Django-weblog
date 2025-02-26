@@ -26,7 +26,7 @@ class Category(models.Model):
         return super().save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('category-detail', kwargs={'pk': self.pk})
+        return reverse('home:home', kwargs={'pk': self.pk})
 
 
 # Create your models here.
@@ -41,8 +41,6 @@ class Post(models.Model):
     keywords = models.CharField(null=True, blank=True, verbose_name='separated with comma (,)')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-
 
     def save(self, *args, **kwargs):
         if not self.slug:

@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.utils.text import slugify
-from django.views.generic import DetailView, CreateView, DeleteView, UpdateView, View
+from django.views.generic import DetailView, CreateView, DeleteView, UpdateView, View, TemplateView
 
 from .forms import CreatePostForm
 from posts.models import Post, Category
@@ -76,3 +76,5 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('accounts:profile', kwargs={'username': self.request.user.username})
+
+
