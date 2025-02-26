@@ -26,7 +26,11 @@
                     <input type="text" class="form-control search-bar" placeholder="Search...">
                 </div>
                 <div class="mb-4">
-                    <h5>Categories</h5>
+                    <h5 class="d-flex justify-content-between">
+                        <span>Categories</span>
+                        <a href="{% url 'posts:post-category-lists' %}"> <span class="text-white">Show All</span></a>
+                    </h5>
+
                     {% for category in categories %}
                         <ul class="list-group category-list">
                             <li class="list-group-item"><a href="#"
