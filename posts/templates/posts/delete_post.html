@@ -1,18 +1,37 @@
 {% extends 'main.html' %}
 
-{% block title %}
-    Delete {{ object }}
-{% endblock %}
-{% block other_posts %}
-    <form method="post">
-        {% csrf_token %}
 
-        <h4>Are you sure you want to delete
-            <mark>"{{ object }}"</mark>
-            ?
-        </h4>
-        <br>
-        <input type="submit" value="Confirm" class="btn btn-danger">
-    </form>
+{% block main %}
 
+    <div class="col-md-9 py-4">
+        <h2>Delete Post</h2>
+        <div class="card p-4">
+            <h5>Are you sure you want to delete this post?</h5>
+            <div class="mb-3">
+                <p><strong>Title:</strong> {{ post.title }}</p>
+                <p><strong>Category:</strong> {{ post.categories }}</p>
+                <p><strong>Posted:</strong> {{ post.created_at|timesince }} ago</p>
+                <p><strong>Content Preview:</strong> {{ post.content |truncatewords:10 }}</p>
+                <p><strong>Image:</strong> <a href="{{ post.featured_image.url }}" target="_blank">View
+                    image</a></p>
+            </div>
+            <form method="post">
+                {% csrf_token %}
+
+                <h4>Are you sure you want to delete
+                    <mark>"{{ object }}"</mark>
+                    ?
+                </h4>
+                <br>
+
+                <div class="d-flex gap-2">
+                    <input type="submit" class="btn btn-danger" value="Yes, Delete Post">
+                    <a href="{% url 'accounts:profile' post.author.username %}" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+
+        </div>
+    </div>
 {% endblock %}
+
+

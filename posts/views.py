@@ -31,12 +31,17 @@ class CreatePostView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('home:home')
+        return reverse_lazy('accounts:profile', kwargs={'username': self.request.user.username})
 
 
 class PostDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'posts/delete_post.html'
     model = Post
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['post'] = Post.objects.get(slug=self.kwargs['slug'])
+        return context
 
     def dispatch(self, request, *args, **kwargs):
         user = request.user

@@ -12,11 +12,15 @@
                     <h2 class="card-title">{{ post.title }}</h2>
                     <p class="text-muted mb-3">Posted by {{ post.author }} | {{ post.created_at|timesince }} ago</p>
                     <p class="card-text">{{ post.content }}</p>
-                    {% if request.user.is_authenticated == post.author %}
-                    	<div class="d-flex justify-content-end gap-2 mt-4">
-                        <button class="btn btn-danger">Delete Post</button>
-                        <button class="btn btn-primary">Update Post</button>
-                    </div>
+                    {% if request.user == post.author %}
+                        <div class="d-flex justify-content-end gap-2 mt-4">
+                            <a href="{% url 'posts:post-delete' post.slug %}">
+                                <button class="btn btn-danger">Delete Post</button>
+                            </a>
+                            <a href="{% url 'posts:post-update' post.slug %}">
+                                <button class="btn btn-primary">Update Post</button>
+                            </a>
+                        </div>
                     {% endif %}
                 </div>
             </div>
