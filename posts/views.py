@@ -59,7 +59,7 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
 class PostUpdateView(UpdateView):
     template_name = 'posts/update_post.html'
     model = Post
-    fields = ['title', 'content', 'featured_image', 'categories']
+    form_class = CreatePostForm
 
     def dispatch(self, request, *args, **kwargs):
         user = request.user
@@ -70,14 +70,9 @@ class PostUpdateView(UpdateView):
         return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
-        data = form.cleaned_data
         form.instance.author = self.request.user
-        form.instance.slug = slugify(data['title'])
-        form.instance.title = data['title']
-        form.instance.content = data['content']
-        form.instance.featured_image = data['featured_image']
-        form.instance.save()
-        return redirect('posts:post-detail', data['title'])
+        messages.success(self.request, 'Post updated successfully', 'success')
+        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse_lazy('accounts:profile', kwargs={'username': self.request.user.username})
