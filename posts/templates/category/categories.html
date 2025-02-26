@@ -9,7 +9,7 @@
         <div class="row">
             {% for category in categories %}
                 <div class="col-md-4 mb-3">
-                    <a href="category_technology.html" class="card text-decoration-none">
+                    <a href="{% url 'posts:single_category' category.slug %}" class="card text-decoration-none">
                         <div class="card-body">
                             <h5 class="card-title">{{ category.title }}</h5>
                             <p class="card-text">Explore the latest in tech innovations and updates.</p>

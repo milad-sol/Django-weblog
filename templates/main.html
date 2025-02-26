@@ -4,7 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Weblog</title>
+    <title>
+        {% block title %}
+
+        {% endblock %}
+    </title>
 
     <link href="{% static 'css/main.css' %}" rel="stylesheet">
     {% load bootstrap5 %}
@@ -33,7 +37,7 @@
 
                     {% for category in categories %}
                         <ul class="list-group category-list">
-                            <li class="list-group-item"><a href="#"
+                            <li class="list-group-item"><a href="{% url 'posts:single_category' category.slug %}"
                                                            class="text-decoration-none text-white">{{ category.title }}</a>
                             </li>
 

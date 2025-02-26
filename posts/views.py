@@ -31,6 +31,7 @@ class CreatePostView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
+        messages.success(self.request, 'Post created successfully', 'success')
         return reverse_lazy('accounts:profile', kwargs={'username': self.request.user.username})
 
 
@@ -53,6 +54,7 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
         return super().dispatch(request, *args, **kwargs)
 
     def get_success_url(self):
+        messages.success(self.request, 'Post deleted successfully', 'success')
         return reverse_lazy('accounts:profile', kwargs={'username': self.request.user.username})
 
 

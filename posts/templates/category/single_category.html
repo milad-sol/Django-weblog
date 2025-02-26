@@ -12,7 +12,7 @@
                             <h5 class="card-title">{{ post.title }}</h5>
                             <p class="card-text">{{ post.content|truncatewords:7 }}</p>
                             <p class="small text-muted mb-2">Category: <a
-                                    href="{% url 'posts:single_category' post.categories %}">{{ post.categories }}</a>
+                                    href="{% url 'posts:single_category' post.categories.slug %}">{{ post.categories }}</a>
                                 |
                                 Author: <a
                                         href="{% url 'accounts:profile' post.author.username %}">{{ post.author }}</a>
@@ -22,7 +22,8 @@
                         </div>
                     </div>
                 </div>
-
+            {% empty %}
+                <h5>There is no post yet !</h5>
             {% endfor %}
 
 
