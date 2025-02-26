@@ -3,9 +3,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.utils.text import slugify
-from django.views.generic import DetailView, TemplateView, CreateView, View, DeleteView, UpdateView
+from django.views.generic import DetailView, CreateView, DeleteView, UpdateView, View
 
-from posts.models import Post
+from .forms import CreatePostForm
+from posts.models import Post, Category
 
 
 class PostDetailView(DetailView):
@@ -22,19 +23,15 @@ class PostDetailView(DetailView):
 class CreatePostView(LoginRequiredMixin, CreateView):
     template_name = 'posts/create_new_post.html'
     model = Post
-    fields = ['title', 'content', 'featured_image', 'categories']
-
-    def dispatch(self, request, *args, **kwargs):
-        if request.user != self.request.user:
-            messages.error(self.request, 'You are not authorized to post this page.', 'danger')
-            return redirect("accounts:profile", slug=self.request.user)
-        return super().dispatch(request, *args, **kwargs)
+    form_class = CreatePostForm
 
     def form_valid(self, form):
-        data = form.cleaned_data
-        form.instance.author = self.request.user
-        form.instance.slug = slugify(data['title'])
+        self.model.author = self.request.user
+        messages.success(self.request, 'Post created successfully', 'success')
         return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('home:home')
 
 
 class PostDeleteView(LoginRequiredMixin, DeleteView):
