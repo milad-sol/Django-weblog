@@ -20,6 +20,7 @@
     <div class="row">
         <!-- Sidebar -->
         {% block sidebar %}
+            <!-- Sidebar -->
             <div class="col-md-3 sidebar">
                 <div class="mb-4">
                     <input type="text" class="form-control search-bar" placeholder="Search...">
@@ -27,9 +28,12 @@
                 <div class="mb-4">
                     <h5>Categories</h5>
                     <ul class="list-group category-list">
-                        <li class="list-group-item">Technology</li>
-                        <li class="list-group-item">Sports</li>
-                        <li class="list-group-item">News</li>
+                        <li class="list-group-item"><a href="category-posts.html?cat=technology"
+                                                       class="text-decoration-none text-white">Technology</a></li>
+                        <li class="list-group-item"><a href="category-posts.html?cat=sports"
+                                                       class="text-decoration-none text-white">Sports</a></li>
+                        <li class="list-group-item"><a href="category-posts.html?cat=news"
+                                                       class="text-decoration-none text-white">News</a></li>
                     </ul>
                 </div>
                 <div>

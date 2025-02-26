@@ -56,7 +56,7 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
         return reverse_lazy('accounts:profile', kwargs={'username': self.request.user.username})
 
 
-class PostUpdateView(UpdateView):
+class PostUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'posts/update_post.html'
     model = Post
     form_class = CreatePostForm

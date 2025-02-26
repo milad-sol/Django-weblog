@@ -55,9 +55,7 @@ class UserProfileView(LoginRequiredMixin, TemplateView):
 
         context['user_information'] = User.objects.get(id=self.request.user.id)
         context['user_post'] = Post.objects.filter(author=self.request.user).order_by('-created_at')
-        print(context['user_post'])
         return context
-
 
 
 class UserLogoutView(LoginRequiredMixin, View):
