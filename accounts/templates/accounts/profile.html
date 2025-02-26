@@ -10,13 +10,14 @@
             <div class="col-md-6 py-4">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h2>My Posts</h2>
-                    {% for post in user_post %}
-                        {% if request.user == post.author %}
-                            <a href="{% url 'posts:post-create' %}" class="btn btn-primary">Create New Post</a>
-                        {% endif %}
-                        </div>
-                        <div class="post-list">
 
+                    {% if request.user.is_authenticated %}
+                        <a href="{% url 'posts:post-create' %}" class="btn btn-primary">Create New Post</a>
+                    {% endif %}
+                </div>
+
+                <div class="post-list">
+                    {% for post in user_post %}
                         <div class="card mb-3">
                             <div class="row g-0">
                                 <div class="col-md-4">
@@ -41,7 +42,7 @@
 
 
                     <!-- Add more posts as needed -->
-                    </div>
+                </div>
             </div>
 
             <!-- Right Sidebar (User Profile) -->
