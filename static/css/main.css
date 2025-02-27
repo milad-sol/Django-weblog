@@ -391,3 +391,52 @@ textarea.form-control {
     border-radius: 10px;
 }
 
+/* Add to existing style.css */
+
+/* Reply form styling */
+.reply-form textarea {
+    font-size: 0.9rem;
+    border-radius: 8px;
+}
+
+.reply-form .btn-outline-primary {
+    border-radius: 20px;
+    padding: 5px 15px;
+}
+
+.reply-form .btn-outline-primary:hover {
+    background: #3498db;
+    color: #fff;
+}
+
+/* New comment form styling */
+.new-comment-form textarea {
+    border-radius: 10px;
+}
+
+.new-comment-form .btn-primary {
+    border-radius: 25px;
+    padding: 10px 20px;
+}
+
+/* Add to existing style.css */
+
+/* Top-level comment styling (already exists) */
+.comment {
+    transition: all 0.3s ease;
+}
+
+.comment:hover {
+    background: #f1f3f5 !important;
+}
+
+/* Reply comment styling */
+.reply-comment {
+    background: #e7f1ff !important; /* Light blue background */
+    margin-left: 2rem; /* Indentation */
+    border-left: 3px solid #3498db; /* Blue border on the left */
+}
+
+.reply-comment:hover {
+    background: #d9e8ff !important; /* Slightly darker blue on hover */
+}

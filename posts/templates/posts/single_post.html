@@ -36,27 +36,47 @@
 
                     <!-- Existing Comments -->
                     <div class="mb-4">
+                        <!-- Top-level Comment 1 -->
                         <div class="comment mb-3 p-3 bg-light rounded">
                             <p class="mb-1"><strong>Jane Smith</strong> <small class="text-muted">1 hour ago</small></p>
-                            <p>Great post! Really informative content.</p>
+                            <p class="mb-3">Great post! Really informative content.</p>
+                            <!-- Reply Form -->
+                            <form class="reply-form">
+                                <div class="mb-2">
+                                    <textarea class="form-control" rows="2" placeholder="Write a reply..."
+                                              required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-outline-primary btn-sm">Reply</button>
+                            </form>
                         </div>
-                        <div class="comment mb-3 p-3 bg-light rounded">
-                            <p class="mb-1"><strong>Mike Johnson</strong> <small class="text-muted">30 minutes
-                                ago</small>
+                        <!-- Reply to Jane's Comment -->
+                        <div class="comment reply-comment mb-3 p-3 bg-info-subtle rounded ms-4">
+                            <p class="mb-1"><strong>Tom Wilson</strong> <small class="text-muted">45 minutes ago</small>
                             </p>
-                            <p>Thanks for sharing this news!</p>
+                            <p class="mb-3">Thanks, Jane! Glad you liked it.</p>
+                            <!-- Reply Form -->
+                            <form class="reply-form">
+                                <div class="mb-2">
+                                    <textarea class="form-control" rows="2" placeholder="Write a reply..."
+                                              required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-outline-primary btn-sm">Reply</button>
+                            </form>
                         </div>
-                    </div>
 
-                    <!-- Comment Form -->
-                    <form>
-                        <div class="mb-3">
+
+                        <!-- New Comment Form -->
+                        <h4 class="mb-3">Add a Comment</h4>
+                        <form class="new-comment-form">
+                            <div class="mb-3">
                             <textarea class="form-control" rows="3" placeholder="Write your comment..."
                                       required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Post Comment</button>
-                    </form>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Post Comment</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
 {% endblock %}
