@@ -1,25 +1,72 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse_lazy
-from django.utils.text import slugify
-from django.views.generic import DetailView, CreateView, DeleteView, UpdateView, ListView, TemplateView
-
-from .forms import CreatePostForm
+from django.utils.decorators import method_decorator
+from django.views.generic import DetailView, CreateView, DeleteView, UpdateView, ListView, TemplateView, View
+from .forms import CreatePostForm, CommentCreateForm, CommentReplyForm
 from posts.models import Post, Category, Comment
 
 
-class PostDetailView(DetailView):
-    template_name = 'posts/single_post.html'
-    model = Post
+class PostDetailView(View):
+    template_name = 'posts/detail_post.html'
+
     context_object_name = 'post'
+    comment_form = CommentCreateForm
+    reply_form = CommentReplyForm
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['post'] = Post.objects.get(slug=self.kwargs['slug'])
-        context['comments'] = Comment.objects.filter(post=context['post'], is_reply=False)
+    def setup(self, request, *args, **kwargs):
+        """
+        because we need it in all method so we use setup
+        """
 
-        return context
+        self.post_instance = get_object_or_404(Post, slug=kwargs['slug'])
+        return super().setup(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        comments = Comment.objects.filter(post=self.post_instance, is_reply=False)
+        return render(request, self.template_name,
+                      context={'post': self.post_instance, 'comments': comments, 'comment_form': self.comment_form,
+                               'reply_form': self.reply_form})
+
+    """
+    method_decorator is a function (actually a class acting as a decorator factory) in Django used to convert a function-based decorator into a method-based decorator. This is important when you want to apply decorators to methods within Django class-based views.
+The Problem:
+Regular function decorators don't work directly on methods of class-based views because the decorator receives the function itself, not the method bound to an instance. This loses the crucial self argument, preventing the method from accessing the view's instance and its attributes.
+The Solution:
+method_decorator solves this by creating a wrapper that correctly handles the self argument when the decorated method is called.
+    """
+
+    @method_decorator(login_required)
+    def post(self, request, *args, **kwargs):
+        form = self.comment_form(request.POST)
+        if form.is_valid():
+            new_comment = form.save(commit=False)
+            new_comment.author = request.user
+            new_comment.post = self.post_instance
+            new_comment.save()
+            messages.success(request, 'Your comment submitted successfully', extra_tags='success')
+        return redirect('posts:post-detail', slug=kwargs['slug'])
+
+
+class PostReplyCommentView(LoginRequiredMixin, View):
+    form_class = CommentReplyForm
+
+    def post(self, request, *args, **kwargs):
+        post = get_object_or_404(Post, id=kwargs['post_id'])
+        comment = get_object_or_404(Comment, id=kwargs['comment_id'])
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            reply = form.save(commit=False)
+            reply.author = request.user
+            reply.post = post
+            reply.parent = comment
+            reply.is_reply = True
+            reply.save()
+            messages.success(request, 'Your reply submitted successfully', extra_tags='success')
+
+        return redirect('posts:post-detail', slug=post.slug)
 
 
 class CreatePostView(LoginRequiredMixin, CreateView):

@@ -57,15 +57,13 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_comment')
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author_comment')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_comment')
     parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='replies')
     is_reply = models.BooleanField(default=False)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-
-
     def __str__(self):
-        return self.content[:30]
+        return '{} - {}'.format(self.author, self.content[:30])

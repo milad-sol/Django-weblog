@@ -11,4 +11,5 @@ urlpatterns = [
 
     path('category/lists/', views.PostCategoryListView.as_view(), name='post-category-lists'),
     path('category/<slug:slug>/', views.PostCategoryDetailView.as_view(), name='single_category'),
+    path('reply/<int:post_id>/<int:comment_id>/', views.PostReplyCommentView.as_view(), name='post-reply-comment'),
 ]

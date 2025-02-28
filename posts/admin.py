@@ -20,7 +20,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('author', 'post', 'content', 'is_reply', 'parent', 'created_at')
+    list_display = ('author', 'post',  'is_reply', 'created_at')
     list_filter = ('is_reply', 'created_at')
     search_fields = ('content', 'author__username', 'post__title')
     ordering = ('-created_at',)

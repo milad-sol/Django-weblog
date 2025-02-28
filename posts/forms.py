@@ -1,7 +1,6 @@
 from django import forms
-from django.core.exceptions import ValidationError
 
-from posts.models import Post, Category
+from posts.models import Post, Category, Comment
 
 
 class CreatePostForm(forms.ModelForm):
@@ -17,3 +16,26 @@ class CreatePostForm(forms.ModelForm):
         }
 
 
+class CommentCreateForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']
+        widgets = {
+            'content': forms.Textarea(
+                attrs={'class': 'form-control', 'rows': 3,
+                       'placeholder': 'Write your comment...'}),
+        }
+        labels = {
+            'content': ''
+        }
+
+
+class CommentReplyForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']
+        widgets = {
+            'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Write your reply...'}),
+
+        }
+        labels = {'content': ''}

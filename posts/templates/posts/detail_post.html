@@ -42,62 +42,78 @@
 
                         {% for comment in comments %}
                             <div class="comment mb-3 p-3 bg-light rounded">
-                                <p class="mb-1"><strong>{{ comment.author |capfirst }}</strong> <small
+                                <p class="mb-1"><strong>{{ comment.author |capfirst }} |</strong> <small
                                         class="text-muted">{{ comment.created_at|timesince }} ago</small></p>
                                 <p class="mb-3">{{ comment.content }}</p>
                                 <!-- Reply Form -->
-                                <form class="reply-form">
-                                    <div class="mb-2">
-                                    <textarea class="form-control" rows="2" placeholder="Write a reply..."
-                                              required></textarea>
-                                    </div>
-                                    <button type="submit" class="btn btn-outline-primary btn-sm">Reply</button>
-                                </form>
+                                {% if request.user.is_authenticated %}
+                                   <form class="reply-form" method="post"
+                                              action="{% url 'posts:post-reply-comment' post.id comment.id %}">
+                                        <div class="mb-2">
+                                            {% csrf_token %}
+                                            {{ reply_form }}
+                                        </div>
+                                        <button type="submit" class="btn btn-outline-primary btn-sm">Reply</button>
+                                    </form>
+
+                                {% endif %}
                             </div>
 
 
                             <!-- Reply to Jane's Comment -->
 
 
-                            <div class="comment reply-comment mb-3 p-3 bg-info-subtle rounded ms-4">
-                                {% for reply in comment.replies.all %}
-                                    <p class="mb-1"><strong>{{ reply.author |capfirst }}</strong> <small
+
+                            {% with replies=comment.replies.all %}
+                                {% for reply in replies %}
+                                    <div class="comment reply-comment mb-3 p-3 bg-info-subtle rounded ms-4">
+                                    <p class="mb-1"><strong>{{ reply.author |capfirst }} |</strong> <small
                                             class="text-muted">{{ reply.created_at|timesince }}
                                         ago</small>
                                     </p>
                                     <p class="mb-3">{{ reply.content }}</p>
                                     <!-- Reply Form -->
-                                    <form class="reply-form">
-                                        <div class="mb-2">
-                                    <textarea class="form-control" rows="2" placeholder="Write a reply..."
-                                              required></textarea>
-                                        </div>
-                                        <button type="submit" class="btn btn-outline-primary btn-sm">Reply</button>
-                                    </form>
+                                    {% if request.user.is_authenticated %}
+                                        <form class="reply-form" method="post"
+                                              action="{% url 'posts:post-reply-comment' post.id comment.id %}">
+                                            <div class="mb-2">
+                                                {% csrf_token %}
+                                                {{ reply_form }}
+                                            </div>
+                                            <button type="submit" class="btn btn-outline-primary btn-sm">Reply</button>
+                                        </form>
+                                    {% endif %}
                                 {% endfor %}
+                            {% endwith %}
+                        </div>
+                        {% empty %}
+                            <div class="comment mb-3 p-3 bg-light rounded">
+                                <p>There is no comment yet!</p>
                             </div>
-
-
-
-
-
-
-
-
                         {% endfor %}
+
+
+
 
                         <!-- New Comment Form -->
                         <h4 class="mb-3">Add a Comment</h4>
-                        <form class="new-comment-form">
+                        {% if request.user.is_authenticated %}
+                            <form class="new-comment-form" method="post">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    {{ comment_form }}
+                                    <input type="submit" class="btn btn-primary m-3" value="Post Comment">
+                                </div>
+                            </form>
+                        {% else %}
                             <div class="mb-3">
-                            <textarea class="form-control" rows="3" placeholder="Write your comment..."
-                                      required></textarea>
+                                <p class="alert alert-danger">Only logged-in users can comment.</p>
                             </div>
-                            <button type="submit" class="btn btn-primary">Post Comment</button>
-                        </form>
+                        {% endif %}
+
                     </div>
                 </div>
             </div>
         </div>
-
+    </div>
 {% endblock %}
