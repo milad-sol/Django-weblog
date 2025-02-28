@@ -11,6 +11,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
+    user_profile_image = models.ImageField(upload_to='static/images/profile', null=True, blank=True)
+    bio = models.TextField(max_length=500, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     USERNAME_FIELD = 'phone_number'
     REQUIRED_FIELDS = ['username', 'email', 'full_name']
     readonly_fields = ['is_active', 'is_admin', 'is_superuser']
