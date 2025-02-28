@@ -19,6 +19,14 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 @admin.register(Comment)
-class CommentInline(admin.ModelAdmin):
-    list_display = ['post', 'post_id', 'author', 'is_reply', 'created_at', 'updated_at']
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('author', 'post', 'content', 'is_reply', 'parent', 'created_at')
+    list_filter = ('is_reply', 'created_at')
+    search_fields = ('content', 'author__username', 'post__title')
+    ordering = ('-created_at',)
+
+    raw_id_fields = ('author', 'post', 'parent')
+
+
+
 

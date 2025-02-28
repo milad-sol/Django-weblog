@@ -29,6 +29,7 @@
                 </div>
             </div>
 
+
             <!-- Comments Section -->
             <div class="card mb-4">
                 <div class="card-body">
@@ -36,34 +37,54 @@
 
                     <!-- Existing Comments -->
                     <div class="mb-4">
-                        <!-- Top-level Comment 1 -->
-                        <div class="comment mb-3 p-3 bg-light rounded">
-                            <p class="mb-1"><strong>Jane Smith</strong> <small class="text-muted">1 hour ago</small></p>
-                            <p class="mb-3">Great post! Really informative content.</p>
-                            <!-- Reply Form -->
-                            <form class="reply-form">
-                                <div class="mb-2">
-                                    <textarea class="form-control" rows="2" placeholder="Write a reply..."
-                                              required></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-outline-primary btn-sm">Reply</button>
-                            </form>
-                        </div>
-                        <!-- Reply to Jane's Comment -->
-                        <div class="comment reply-comment mb-3 p-3 bg-info-subtle rounded ms-4">
-                            <p class="mb-1"><strong>Tom Wilson</strong> <small class="text-muted">45 minutes ago</small>
-                            </p>
-                            <p class="mb-3">Thanks, Jane! Glad you liked it.</p>
-                            <!-- Reply Form -->
-                            <form class="reply-form">
-                                <div class="mb-2">
-                                    <textarea class="form-control" rows="2" placeholder="Write a reply..."
-                                              required></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-outline-primary btn-sm">Reply</button>
-                            </form>
-                        </div>
+                        <!-- Top-level Comment -->
 
+
+                        {% for comment in comments %}
+                            <div class="comment mb-3 p-3 bg-light rounded">
+                                <p class="mb-1"><strong>{{ comment.author |capfirst }}</strong> <small
+                                        class="text-muted">{{ comment.created_at|timesince }} ago</small></p>
+                                <p class="mb-3">{{ comment.content }}</p>
+                                <!-- Reply Form -->
+                                <form class="reply-form">
+                                    <div class="mb-2">
+                                    <textarea class="form-control" rows="2" placeholder="Write a reply..."
+                                              required></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-outline-primary btn-sm">Reply</button>
+                                </form>
+                            </div>
+
+
+                            <!-- Reply to Jane's Comment -->
+
+
+                            <div class="comment reply-comment mb-3 p-3 bg-info-subtle rounded ms-4">
+                                {% for reply in comment.replies.all %}
+                                    <p class="mb-1"><strong>{{ reply.author |capfirst }}</strong> <small
+                                            class="text-muted">{{ reply.created_at|timesince }}
+                                        ago</small>
+                                    </p>
+                                    <p class="mb-3">{{ reply.content }}</p>
+                                    <!-- Reply Form -->
+                                    <form class="reply-form">
+                                        <div class="mb-2">
+                                    <textarea class="form-control" rows="2" placeholder="Write a reply..."
+                                              required></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-outline-primary btn-sm">Reply</button>
+                                    </form>
+                                {% endfor %}
+                            </div>
+
+
+
+
+
+
+
+
+                        {% endfor %}
 
                         <!-- New Comment Form -->
                         <h4 class="mb-3">Add a Comment</h4>
@@ -78,5 +99,5 @@
                 </div>
             </div>
         </div>
-    </div>
+
 {% endblock %}

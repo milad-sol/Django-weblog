@@ -12,4 +12,5 @@ class HomeView(TemplateView):
         context['settings'] = WeblogSettings.objects.first()
         context['breaking_news'] = Post.objects.filter(hot_post=True).order_by('-created_at')[:4]
         context['other_posts'] = Post.objects.filter(hot_post=False).order_by('-created_at')[:4]
+
         return context

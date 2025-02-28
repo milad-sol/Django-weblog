@@ -6,7 +6,7 @@ from django.utils.text import slugify
 from django.views.generic import DetailView, CreateView, DeleteView, UpdateView, ListView, TemplateView
 
 from .forms import CreatePostForm
-from posts.models import Post, Category
+from posts.models import Post, Category, Comment
 
 
 class PostDetailView(DetailView):
@@ -17,6 +17,8 @@ class PostDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['post'] = Post.objects.get(slug=self.kwargs['slug'])
+        context['comments'] = Comment.objects.filter(post=context['post'], is_reply=False)
+
         return context
 
 
