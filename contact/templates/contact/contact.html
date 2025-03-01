@@ -1,0 +1,20 @@
+{% extends 'main.html' %}
+{% block title %}
+    contact us
+{% endblock %}
+{% block main %}
+    <!-- Main Content -->
+    <div class="col-md-9 py-4">
+        <h2>Contact Us</h2>
+        <div class="card p-4">
+
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Send Message" class="btn btn-primary">
+            </form>
+
+        </div>
+    </div>
+
+{% endblock %}
