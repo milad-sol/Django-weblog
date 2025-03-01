@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'posts.apps.PostConfig',
     'home.apps.HomeConfig',
     'contact.apps.ContactConfig',
+    'about.apps.AboutConfig',
 
     'bootstrap5',
 ]

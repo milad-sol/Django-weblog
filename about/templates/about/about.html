@@ -1,0 +1,29 @@
+{% extends 'main.html' %}
+{% block title %}
+    about us
+{% endblock %}
+{% block main %}
+    <!-- Main Content -->
+    <div class="col-md-9 py-4">
+        <h2>About Us</h2>
+        <div class="card p-4">
+            <h3 class="card-title mb-3">{{ about.title }}</h3>
+            <p class="card-text">
+                {{ about.body }}
+            </p>
+            <h4 class="mt-4 mb-3">{{ about.our_vision_title }}</h4>
+            <p class="card-text">
+                {{ about.our_vision_body }}
+            </p>
+            <h4 class="mt-4 mb-3">What We Offer</h4>
+            <ul class="list-group list-group-flush mb-3">
+                {% for line in about.what_we_offer.splitlines %}
+                    <li class="list-group-item">{{ line }}</li>
+                {% endfor %}
+
+            </ul>
+
+        </div>
+    </div>
+
+{% endblock %}

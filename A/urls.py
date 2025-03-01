@@ -23,5 +23,6 @@ urlpatterns = [
     path('accounts/', include('accounts.urls', namespace='accounts')),
     path('posts/', include('posts.urls', namespace='posts')),
     path('contact/', include('contact.urls', namespace='contact')),
+    path('about/', include('about.urls', namespace='about')),
 
 ]
