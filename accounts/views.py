@@ -1,11 +1,12 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
-from django.views.generic import TemplateView, View, FormView
+from django.views.generic import TemplateView, View, FormView, UpdateView
 from posts.models import Post
-from .forms import UserRegistrationForm, LoginForm
+from .forms import UserRegistrationForm, LoginForm, EditProfileForm
 from .models import User
 from django.contrib.auth import login, logout, authenticate
+from django.urls import reverse
 
 
 # Create your views here.
@@ -53,8 +54,9 @@ class UserProfileView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['user_information'] = User.objects.get(id=self.request.user.id)
-        context['user_post'] = Post.objects.filter(author=self.request.user).order_by('-created_at')
+        context['user_information'] = User.objects.get(username=kwargs['username'])
+
+        context['user_post'] = Post.objects.filter(author=context['user_information']).order_by('-created_at')
         return context
 
 
@@ -65,3 +67,18 @@ class UserLogoutView(LoginRequiredMixin, View):
         messages.success(request, 'You are now logged out.', 'success')
 
         return redirect('accounts:login')
+
+
+class UserEditProfileView(LoginRequiredMixin, UpdateView):
+    template_name = 'accounts/edit_profile.html'
+    model = User
+    form_class = EditProfileForm
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def form_valid(self, form):
+        if form.is_valid():
+            messages.success(self.request, 'You are now edited successfully', extra_tags='success')
+            form.save()
+            return redirect('accounts:profile', self.request.user.username)

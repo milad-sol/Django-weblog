@@ -20,6 +20,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     readonly_fields = ['is_active', 'is_admin', 'is_superuser']
     objects = UserManager()
 
+
+
     def __str__(self):
         return self.full_name
 

@@ -71,9 +71,7 @@ class UserRegistrationForm(forms.ModelForm):
         model = User
         fields = ['full_name', 'username', 'phone_number', 'email', 'password', 'confirm_password']
         widgets = {
-            # 'password': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Enter your Password'}),
-            # 'confirm_password': forms.PasswordInput(
-            #     attrs={'class': 'form-control', 'placeholder': 'Enter your Confirm Password'}),
+
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Enter your Email'}),
             'full_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your Full Name'}),
             'phone_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your Phone Number'}),
@@ -122,3 +120,15 @@ class LoginForm(forms.Form):
         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your username or phone'}))
     password = forms.CharField(
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Enter your password'}))
+
+
+class EditProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['bio', 'user_profile_image']
+        widgets = {
+            'bio': forms.Textarea(
+                attrs={'class': 'form-control', 'placeholder': 'Tell us about yourself...', 'rows': 3, 'id': "bio",
+                      }),
+            'user_profile_image': ''
+        }

@@ -39,6 +39,11 @@
                                 </div>
                             </div>
                         </div>
+                    {% empty %}
+                        <div class="col-md-4">
+                            <h5 class="m-5">There is no post yet !</h5>
+                        </div>
+
                     {% endfor %}
 
 
@@ -51,15 +56,29 @@
                 <h5>User Profile</h5>
 
                 <div class="text-center">
-                    <img src="{% static 'images/profile/3135715.png' %}" class="rounded-circle mb-3"
-                         alt="Profile Picture">
+                    {% if user_information.user_profile_image %}
+                        <img src="{{ user_information.user_profile_image.url }}" class="rounded-circle mb-3"
+                             alt="Profile Picture">
+                    {% else %}
+                        <img src="{% static 'images/profile/3135715.png' %}" class="rounded-circle mb-3"
+                             alt="Profile Picture">
+                    {% endif %}
                     <h6>{{ user_information.full_name }}</h6>
                     <p class="small"><strong>Email:</strong> {{ user_information.email }}</p>
                     <p class="small"><strong>Last Login:</strong> {{ user_information.last_login|timesince }}</p>
                     <p class="small"><strong>Posts:</strong> {{ user_post|length }}</p>
 
-                    <p class="small"><strong>Bio:</strong> Passionate blogger</p>
-                    <button class="btn btn-primary mt-2">Edit Profile</button>
+                    {% if user_information.bio %}
+                        <p class="small"><strong>Bio:</strong> {{ user_information.bio }}</p>
+                    {% else %}
+                        <p class="small"><strong>Bio:</strong> tell us about yourself ...</p>
+                    {% endif %}
+                    {% if request.user.is_authenticated and user_information.id == request.user.id %}
+                        <a href="{% url 'accounts:edit_profile' username %}">
+                            <button class="btn btn-primary mt-2">Edit Profile</button>
+                        </a>
+
+                    {% endif %}
                 </div>
 
 
