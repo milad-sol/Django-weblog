@@ -25,34 +25,33 @@
     <div class="row">
         <!-- Sidebar -->
 
-            <!-- Sidebar -->
-            <div class="col-md-3 sidebar">
-                <div class="mb-4">
-                    <input type="text" class="form-control search-bar" placeholder="Search...">
-                </div>
-                <div class="mb-4">
-                    <h5 class="d-flex justify-content-between">
-                        <span>Categories</span>
-                        <a href="{% url 'posts:post-category-lists' %}"> <span class="text-white">Show All</span></a>
-                    </h5>
-
-                    {% for category in categories %}
-                        <ul class="list-group category-list">
-                            <li class="list-group-item"><a href="{% url 'posts:single_category' category.slug %}"
-                                                           class="text-decoration-none text-white">{{ category.title }}</a>
-                            </li>
-
-                        </ul>
-                    {% endfor %}
-
-
-                </div>
-                <div>
-                    <h5>About</h5>
-                    <p class="small">Welcome to my weblog where we share the latest news and updates with a modern
-                        twist.</p>
-                </div>
+        <!-- Sidebar -->
+        <div class="col-md-3 sidebar">
+            <div class="mb-4">
+                <input type="text" class="form-control search-bar" placeholder="Search...">
             </div>
+            <div class="mb-4">
+                <h5 class="d-flex justify-content-between">
+                    <span>Categories</span>
+                    <a href="{% url 'posts:post-category-lists' %}"> <span class="text-white">Show All</span></a>
+                </h5>
+
+                {% for category in categories %}
+                    <ul class="list-group category-list">
+                        <li class="list-group-item"><a href="{% url 'posts:single_category' category.slug %}"
+                                                       class="text-decoration-none text-white">{{ category.title }}</a>
+                        </li>
+
+                    </ul>
+                {% endfor %}
+
+
+            </div>
+            <div>
+                <h5>About</h5>
+                <p class="small">{{ abouts.body }}</p>
+            </div>
+        </div>
 
 
         <!-- Main Content -->

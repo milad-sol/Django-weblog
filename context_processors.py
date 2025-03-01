@@ -1,6 +1,8 @@
 from posts.models import Post, Category
+from about.models import About
 
 
 def categories_context(request):
     categories = Category.objects.all()
-    return {'categories': categories}
+    abouts = About.objects.first()
+    return {'categories': categories, 'abouts': abouts}
