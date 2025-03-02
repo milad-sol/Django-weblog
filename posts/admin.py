@@ -7,7 +7,7 @@ from .models import Post, Category, Comment
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author', 'categories', 'slug', 'hot_post', 'created_at', 'updated_at')
+    list_display = ('title', 'author', 'categories', 'slug', 'is_published', 'breaking_news', 'created_at', 'updated_at')
     search_fields = ('title',)
     ordering = ('-created_at',)
 
@@ -20,13 +20,9 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('author', 'post',  'is_reply', 'created_at')
+    list_display = ('author', 'post', 'is_reply', 'created_at')
     list_filter = ('is_reply', 'created_at')
     search_fields = ('content', 'author__username', 'post__title')
     ordering = ('-created_at',)
 
     raw_id_fields = ('author', 'post', 'parent')
-
-
-
-

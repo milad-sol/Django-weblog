@@ -146,27 +146,30 @@
     <!-- Main Content -->
     <div class="col-md-9 py-4">
         <div class="hot-news">
-            <h2>Hot News</h2>
+            <h2>Breaking News</h2>
+            <hr>
             <div class="row">
                 {% for breaking_new in breaking_news %}
-                    <div class="col-md-3">
-                        <div class="news-card">
-                            <img src="{{ breaking_new.featured_image.url }}" class="card-img-top" alt="Hot News 1">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ breaking_new.title }}</h5>
-                                <p class="card-text">{{ breaking_new.content|truncatewords:10 }}</p>
-                                <p class="small text-muted mb-2">Category: <a
-                                        href="{% url 'posts:single_category' breaking_new.categories.slug %}">{{ breaking_new.categories }}</a>
-                                    |
-                                    Author: <a
-                                            href="{% url 'accounts:profile' breaking_new.author.username %}">{{ breaking_new.author }}</a>
-                                </p>
-                                <small class="text-muted">{{ breaking_new.created_at|timesince }} ago</small>
-                                <a href="{{ breaking_new.get_absolute_url }}" class="btn btn-primary btn-sm">Read
-                                    More</a>
+                    {% if breaking_new.is_published %}
+                        <div class="col-md-3">
+                            <div class="news-card">
+                                <img src="{{ breaking_new.featured_image.url }}" class="card-img-top" alt="Hot News 1">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ breaking_new.title|capfirst }}</h5>
+                                    <p class="card-text">{{ breaking_new.content|truncatewords:10 }}</p>
+                                    <p class="small text-muted mb-2">Category: <a
+                                            href="{% url 'posts:single_category' breaking_new.categories.slug %}">{{ breaking_new.categories }}</a>
+                                        |
+                                        Author: <a
+                                                href="{% url 'accounts:profile' breaking_new.author.username %}">{{ breaking_new.author }}</a>
+                                    </p>
+                                    <small class="text-muted">{{ breaking_new.created_at|timesince }} ago</small>
+                                    <a href="{{ breaking_new.get_absolute_url }}" class="btn btn-primary btn-sm">Read
+                                        More</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    {% endif %}
                 {% endfor %}
 
 
@@ -174,13 +177,15 @@
         </div>
 
         <h2>Other News</h2>
+        <hr>
         <div class="row">
             {% for other_post in other_posts %}
-                <div class="col-md-3">
+                {% if other_post.is_published %}
+                       <div class="col-md-3">
                     <div class="news-card mb-3">
                         <img src="{{ other_post.featured_image.url }}" class="card-img-top" alt="News 1">
                         <div class="card-body">
-                            <h5 class="card-title">{{ other_post.title }}</h5>
+                            <h5 class="card-title">{{ other_post.title|capfirst }}</h5>
                             <p class="card-text">{{ other_post.content|truncatewords:10 }}</p>
                             <p class="small text-muted mb-2">Category: <a
                                     href="{% url 'posts:single_category' other_post.categories.slug %}">{{ other_post.categories }}</a>
@@ -193,6 +198,8 @@
                         </div>
                     </div>
                 </div>
+                {% endif %}
+
             {% endfor %}
 
 
