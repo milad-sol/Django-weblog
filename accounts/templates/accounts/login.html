@@ -18,6 +18,10 @@
                 </div>
                 <input type="submit" class="btn btn-primary w-100" value="Login">
             </form>
+            <h6 class="w-100 text-center m-3">OR</h6>
+            <a href="{% url 'accounts:login_mobile' %}">
+                <button type="submit" class="btn btn-info w-100">Login with phone</button>
+            </a>
             <p class="text-center mt-3 small"><a href="{% url 'accounts:register' %}">Forgot your
                 password?</a></p>
             <p class="text-center mt-3 small">Need an account? <a href="{% url 'accounts:register' %}">Register</a></p>

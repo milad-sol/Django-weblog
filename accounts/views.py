@@ -8,6 +8,7 @@ from .models import User, OtpCode
 from django.contrib.auth import login, logout, authenticate
 from random import randint
 from utils import send_sms_code
+from datetime import datetime, timedelta, timezone
 
 
 class UserLoginView(FormView):
@@ -113,11 +114,6 @@ class VerifyOtpCodeMobileView(View):
     template_name = 'mobile/verify_otp_code.html'
     from_class = VerifyOtpCodeForm
 
-    def dispatch(self, request, *args, **kwargs):
-        if request.session.get('user_login_data') is None:
-            return redirect('accounts:login')
-        return super().dispatch(request, *args, **kwargs)
-
     def get(self, request):
         return render(request, self.template_name, {'form': self.from_class()})
 
@@ -144,12 +140,19 @@ class VerifyOtpCodeMobileView(View):
              username/password verification process if needed, and that the user's permissions and groups are correctly
              loaded.
         """
+
         form = self.from_class(request.POST)
         user_data = request.session.get('user_login_data')
         otp_code = OtpCode.objects.get(code=user_data['otp_code'])
+        expire_otp_code = datetime.now(tz=timezone.utc) + timedelta(minutes=2)
+
         if form.is_valid():
             code = form.cleaned_data.get('code')
             if otp_code.code == code:
+                if otp_code.created_at < expire_otp_code:
+                    otp_code.delete()
+                    messages.error(request, 'OTP code expired.', 'danger')
+                    return redirect('accounts:login_mobile')
                 user = User.objects.get(phone_number=user_data['mobile'])
                 user.backend = 'django.contrib.auth.backends.ModelBackend'
                 login(request, user)
