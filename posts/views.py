@@ -88,14 +88,18 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'posts/delete_post.html'
     model = Post
 
+    def setup(self, request, *args, **kwargs):
+        self.post_instance = get_object_or_404(Post, slug=kwargs['slug'])
+        return super().setup(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['post'] = Post.objects.get(slug=self.kwargs['slug'])
+        context['post'] = self.post_instance
         return context
 
     def dispatch(self, request, *args, **kwargs):
         user = request.user
-        post = Post.objects.get(slug=self.kwargs['slug'])
+        post = self.post_instance
         if post.author != user:
             messages.error(request, f'You are not authorized to delete this post.this post belongs to {post.author}',
                            'danger')
@@ -114,7 +118,7 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
 
     def dispatch(self, request, *args, **kwargs):
         user = request.user
-        post = Post.objects.get(slug=self.kwargs['slug'])
+        post = get_object_or_404(Post, slug=kwargs['slug'])
         if post.author != user:
             messages.error(request, 'You are not authorized to edit this post.', 'danger')
             return redirect('accounts:profile', user.username)

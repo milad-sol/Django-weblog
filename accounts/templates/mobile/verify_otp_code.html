@@ -1,0 +1,18 @@
+{% extends 'main.html' %}
+
+
+{% block main %}
+    <div class="col-md-9 py-4">
+        <h2>Verify Otp</h2>
+        <hr>
+        <div class="card p-4">
+            <form action="{% url 'accounts:verify_otp' %}" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" class="btn btn-primary w-100" value="Login">
+            </form>
+
+        </div>
+
+    </div>
+{% endblock %}

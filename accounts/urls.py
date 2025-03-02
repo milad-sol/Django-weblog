@@ -9,4 +9,6 @@ urlpatterns = [
     path('profile/<str:username>/', views.UserProfileView.as_view(), name='profile'),
     path('logout/', views.UserLogoutView.as_view(), name='logout'),
     path('edit-profile/<str:username>/', views.UserEditProfileView.as_view(), name='edit_profile'),
+    path('login-mobile/', views.UserLoginMobileView.as_view(), name='login_mobile'),
+    path('verify-otp/', views.VerifyOtpCodeMobileView.as_view(), name='verify_otp'),
 ]

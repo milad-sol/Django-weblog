@@ -2,7 +2,7 @@ from django import forms
 
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
-from .models import User
+from .models import User, OtpCode
 
 
 class UserCreationForm(forms.ModelForm):
@@ -129,6 +129,17 @@ class EditProfileForm(forms.ModelForm):
         widgets = {
             'bio': forms.Textarea(
                 attrs={'class': 'form-control', 'placeholder': 'Tell us about yourself...', 'rows': 3, 'id': "bio",
-                      }),
+                       }),
             'user_profile_image': ''
         }
+
+
+class MobileLoginForm(forms.Form):
+    mobile = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your mobile number'}))
+
+
+class VerifyOtpCodeForm(forms.Form):
+    code = forms.IntegerField(label='',
+                              widget=forms.TextInput(
+                                  attrs={'class': 'form-control', 'placeholder': 'Enter the code sent to your mobile'}))

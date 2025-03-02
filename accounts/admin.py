@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .forms import UserChangeForm, UserCreationForm
-from .models import User
+from .models import User, OtpCode
 
 
 @admin.register(User)
@@ -24,3 +24,9 @@ class UserAdmin(BaseUserAdmin):
     add_fieldsets = [
         ('Main', {'fields': ['full_name', 'username', 'phone_number', 'email', 'password', 'confirm_password']}),
     ]
+
+
+@admin.register(OtpCode)
+class OtpCodeAdmin(admin.ModelAdmin):
+    list_display = ('mobile', 'code')
+    list_filter = ('code',)

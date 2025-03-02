@@ -1,0 +1,22 @@
+{% extends 'main.html' %}
+
+
+{% block main %}
+    <div class="col-md-9 py-4">
+        <h2>Login with Mobile</h2>
+        <div class="card p-4">
+            <form method="post">
+                <div class="mb-3">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                </div>
+                <div class="mb-3">
+                    <input type="submit" class="btn btn-outline-primary w-100" value="Send Verification Code">
+                </div>
+            </form>
+            <p class="text-center mt-3 small">Don’t have an account? <a href="register-mobile.html">Register here</a>
+            </p>
+        </div>
+
+    </div>
+{% endblock %}

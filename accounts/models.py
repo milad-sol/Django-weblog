@@ -20,8 +20,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     readonly_fields = ['is_active', 'is_admin', 'is_superuser']
     objects = UserManager()
 
-
-
     def __str__(self):
         return self.full_name
 
@@ -31,3 +29,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     @property
     def is_staff(self):
         return self.is_admin
+
+
+class OtpCode(models.Model):
+    code = models.PositiveIntegerField()
+    mobile = models.CharField(max_length=11)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return '{} {} '.format(self.mobile, self.code)
