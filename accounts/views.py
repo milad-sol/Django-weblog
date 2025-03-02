@@ -163,3 +163,5 @@ class VerifyOtpCodeMobileView(View):
             messages.success(request, 'Your otp code is invalid', 'danger')
             return redirect('accounts:verify_otp')
         return render(request, self.template_name, {'form': form})
+
+
