@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -42,6 +42,10 @@ INSTALLED_APPS = [
     'about.apps.AboutConfig',
 
     'bootstrap5',
+    'storages',
+    'ckeditor',
+    'ckeditor_uploader',
+
 ]
 # Application definition
 
@@ -128,9 +132,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-]
+STATIC_ROOT = BASE_DIR / 'static'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
@@ -141,3 +143,30 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'accounts.authenticate.UserBackend',
 ]
+
+###Storage####
+
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# AWS_ACCESS_KEY_ID = '29226bb1-9b1d-413a-843b-7db180869e16'
+# AWS_SECRET_ACCESS_KEY = 'b7e5677d27cb90735f8c49cbb373ae92e474ab0c50e9de11c445dc03561f2289'
+# AWS_S3_ENDPOINT_URL = "https://milad-weblog.s3.ir-thr-at1.arvanstorage.ir/"
+# AWS_STORAGE_BUCKET_NAME = 'milad-weblog'
+# AWS_LOCAL_STORAGE = f'{BASE_DIR}/aws/'
+# AWS_SERVICE_NAME = 's3'
+# AWS_S3_FILE_OVERWRITE = False
+# MEDIA_URL = 'https://milad-weblog.s3.ir-thr-at1.arvanstorage.ir/'
+# AWS_STORAGE_DIR = f"{BASE_DIR}/aws"
+
+
+####CKEDITOR##############
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 300,
+        'width': 800,
+    },
+}
+CKEDITOR_UPLOAD_PATH = ''
+MEDIA_URL = '/media/'
+MEDIA_ROOT = 'media/'

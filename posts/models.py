@@ -1,6 +1,8 @@
+from ckeditor_uploader.fields import RichTextUploadingField
 from django.db import models
 from django.utils.text import slugify
-
+from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 from accounts.models import User
 from django.shortcuts import reverse
 
@@ -35,8 +37,8 @@ class Post(models.Model):
     categories = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True, related_name='categories')
     title = models.CharField(max_length=150)
     slug = models.SlugField(max_length=20, unique=True, blank=True)
-    content = models.TextField()
-    featured_image = models.ImageField(upload_to='static/images/posts/')
+    content = RichTextUploadingField()
+    featured_image = models.ImageField(upload_to='featured-images/')
     breaking_news = models.BooleanField(default=False)
     is_published = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
