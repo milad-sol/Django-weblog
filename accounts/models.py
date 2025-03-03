@@ -11,7 +11,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
-    user_profile_image = models.ImageField(upload_to='static/images/profile', null=True, blank=True)
+    user_profile_image = models.ImageField(upload_to='profile/images/', null=True, blank=True)
     bio = models.TextField(max_length=500, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -20,12 +20,15 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-                  path('admin/', admin.site.urls),
-                  path('', include('home.urls', namespace='home')),
-                  path('accounts/', include('accounts.urls', namespace='accounts')),
-                  path('posts/', include('posts.urls', namespace='posts')),
-                  path('contact/', include('contact.urls', namespace='contact')),
-                  path('about/', include('about.urls', namespace='about')),
-                  path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('admin/', admin.site.urls),
+    path('', include('home.urls', namespace='home')),
+    path('accounts/', include('accounts.urls', namespace='accounts')),
+    path('posts/', include('posts.urls', namespace='posts')),
+    path('contact/', include('contact.urls', namespace='contact')),
+    path('about/', include('about.urls', namespace='about')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 
-              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

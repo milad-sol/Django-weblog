@@ -15,7 +15,7 @@
                     <p class="text-muted mb-3">Posted by <a
                             href="{% url 'accounts:profile' post.author.username %}">{{ post.author }} </a>| {{ post.created_at|timesince }}
                         ago</p>
-                    <p class="card-text">{{ post.content }}</p>
+                    <p class="card-text">{{ post.content|safe }}</p>
                     {% if request.user == post.author %}
                         <div class="d-flex justify-content-end gap-2 mt-4">
                             <a href="{% url 'posts:post-delete' post.slug %}">
