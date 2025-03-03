@@ -10,7 +10,7 @@
                         <img src="{{ post.featured_image.url }}" class="card-img-top" alt="Tech Post 1">
                         <div class="card-body">
                             <h5 class="card-title">{{ post.title }}</h5>
-                            <p class="card-text">{{ post.content|truncatewords:7 }}</p>
+                            <p class="card-text">{{ post.content|safe|truncatewords:7 }}</p>
                             <p class="small text-muted mb-2">Category: <a
                                     href="{% url 'posts:single_category' post.categories.slug %}">{{ post.categories }}</a>
                                 |

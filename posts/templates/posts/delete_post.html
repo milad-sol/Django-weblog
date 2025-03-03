@@ -13,7 +13,7 @@
                 <p><strong>Title:</strong> {{ post.title }}</p>
                 <p><strong>Category:</strong> {{ post.categories }}</p>
                 <p><strong>Posted:</strong> {{ post.created_at|timesince }} ago</p>
-                <p><strong>Content Preview:</strong> {{ post.content |truncatewords:10 }}</p>
+                <p><strong>Content Preview:</strong> {{ post.content |safe|truncatewords:10 }}</p>
                 <p><strong>Image:</strong> <a href="{{ post.featured_image.url }}" target="_blank">View
                     image</a></p>
             </div>
