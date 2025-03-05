@@ -13,5 +13,7 @@ urlpatterns = [
     path('profile/<str:username>/', views.UserProfileView.as_view(), name='profile'),
     path('logout/', views.UserLogoutView.as_view(), name='logout'),
     path('edit-profile/<str:username>/', views.UserEditProfileView.as_view(), name='edit_profile'),
+    path('forgot-password/', views.ForgotPasswordView.as_view(), name='forgot_password'),
+    path('password-reset/', views.PasswordResetView.as_view(), name='password_reset'),
     path('', include((mobile_urlpatterns, ''))),
 ]

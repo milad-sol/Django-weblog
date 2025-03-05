@@ -1,9 +1,11 @@
 from django.contrib import messages
+from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, View, FormView, UpdateView
 from posts.models import Post
-from .forms import UserRegistrationForm, LoginForm, EditProfileForm, MobileLoginForm, VerifyOtpCodeForm
+from .forms import UserRegistrationForm, LoginForm, EditProfileForm, MobileLoginForm, VerifyOtpCodeForm, \
+    SendForgotPasswordSmsForm, ForgotPasswordForm
 from .models import User, OtpCode
 from django.contrib.auth import login, logout, authenticate
 from random import randint
@@ -165,3 +167,56 @@ class VerifyOtpCodeMobileView(View):
         return render(request, self.template_name, {'form': form})
 
 
+class ForgotPasswordView(FormView):
+    template_name = 'password/forgot-password.html'
+    form_class = SendForgotPasswordSmsForm
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('home:home')
+        return super().dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        random_number = randint(1000, 9999)
+        phone_number = form.cleaned_data['phone_number']
+        user = User.objects.filter(phone_number=phone_number).exists()
+        if not user:
+            messages.error(self.request, 'This user is not exist !!!', 'danger')
+            return redirect('accounts:forgot_password')
+        else:
+            OtpCode.objects.create(mobile=phone_number, code=random_number)
+            send_sms_code(mobile=phone_number, code=random_number)
+            self.request.session['forgot_password'] = {
+                'phone': phone_number,
+                'code': random_number,
+            }
+            messages.success(self.request, 'We sent you an Otp code', 'success')
+            return redirect('accounts:password_reset')
+
+
+class PasswordResetView(FormView):
+    template_name = 'password/reset-password.html'
+    form_class = ForgotPasswordForm
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('home:home')
+        return super().dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        user_forgot_password_info = self.request.session.get('forgot_password')
+        verification_code = form.cleaned_data['verification_code']
+        password = form.cleaned_data['new_password']
+
+        otp_code = OtpCode.objects.filter(code=verification_code).exists()
+        if not otp_code:
+            messages.error(self.request, 'OTP code does not exist', 'danger')
+            return redirect('accounts:password_reset')
+        else:
+            user = User.objects.get(phone_number=user_forgot_password_info['phone'])
+            user.set_password(password)
+            user.save()
+            OtpCode.objects.filter(code=verification_code).delete()
+            self.request.session['forgot_password'].clear()
+            messages.success(self.request, 'Your password changed successfully', 'success')
+        return redirect('accounts:login')

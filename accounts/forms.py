@@ -143,3 +143,31 @@ class VerifyOtpCodeForm(forms.Form):
     code = forms.IntegerField(label='',
                               widget=forms.TextInput(
                                   attrs={'class': 'form-control', 'placeholder': 'Enter the code sent to your mobile'}))
+
+
+class SendForgotPasswordSmsForm(forms.Form):
+    phone_number = forms.CharField(label='Mobile number', widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': 'Enter your mobile number'}))
+
+
+class ForgotPasswordForm(forms.Form):
+    verification_code = forms.CharField(label='Verification code', widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': 'Enter the code sent to your mobile'}))
+    new_password = forms.CharField(label='New password', widget=forms.PasswordInput(
+        attrs={'class': 'form-control', 'placeholder': 'Enter your new password'}))
+    confirm_password = forms.CharField(label='Confirm password', widget=forms.PasswordInput(
+        attrs={'class': 'form-control', 'placeholder': 'Enter your confirm password'}))
+
+    def clean_confirm_password(self):
+        new_password = self.cleaned_data.get('new_password')
+        confirm_password = self.cleaned_data.get('confirm_password')
+        if new_password and confirm_password and new_password != confirm_password:
+            raise ValidationError('Passwords do not match')
+        return confirm_password
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data.get('new_password'))
+        if commit:
+            user.save()
+        return user
