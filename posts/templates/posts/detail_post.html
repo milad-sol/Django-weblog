@@ -24,7 +24,6 @@
     <div class="col-md-9 py-4">
         <!-- Post Section -->
         <div class="news-card mb-4">
-
             <img src="{{ post.featured_image.url }}" class="card-img-top post-page-img" alt="Post Image"
                  data-bs-toggle="modal" data-bs-target="#imageModal">
             <div class="card-body">
@@ -56,8 +55,6 @@
                     <!-- Existing Comments -->
                     <div class="mb-4">
                         <!-- Top-level Comment -->
-
-
                         {% for comment in comments %}
                             <div class="comment mb-3 p-3 bg-light rounded">
                                 <p class="mb-1"><strong>{{ comment.author |capfirst }} |</strong> <small

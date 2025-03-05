@@ -5,6 +5,10 @@ from accounts.models import User
 from django.shortcuts import reverse
 from ckeditor_uploader.fields import RichTextUploadingField
 
+
+
+
+
 class Category(models.Model):
     title = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(max_length=100, unique=True)
