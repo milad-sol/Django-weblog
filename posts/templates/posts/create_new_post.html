@@ -1,6 +1,6 @@
 {% extends 'main.html' %}
 {% block title %}
-	{{ post.title }}
+    {{ post.title }}
 {% endblock %}
 {% block main %}
 
@@ -13,6 +13,7 @@
         <div class="card p-4">
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
+                {{ form.media }}
                 {{ form.as_p }}
                 <input type="submit" value="publish post" class="btn btn-primary">
             </form>

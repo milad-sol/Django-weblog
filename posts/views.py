@@ -80,7 +80,8 @@ class CreatePostView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        messages.success(self.request, 'Post created successfully', 'success')
+        messages.success(self.request, 'After review it will be shown in your profile',
+                         'info')
         return reverse_lazy('accounts:profile', kwargs={'username': self.request.user.username})
 
 
