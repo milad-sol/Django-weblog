@@ -56,8 +56,9 @@ class UserProfileView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
 
         context['user_information'] = User.objects.get(username=kwargs['username'])
-
         context['user_post'] = Post.objects.filter(author=context['user_information']).order_by('-created_at')
+        context['unpublished_posts'] = context['user_post'].filter(is_published=False)
+
         return context
 
 

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Category, Comment
+from .models import Post, Category, Comment, Seo
 
 
 # Register your models here.
@@ -7,15 +7,25 @@ from .models import Post, Category, Comment
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author', 'categories', 'slug', 'is_published', 'breaking_news', 'created_at', 'updated_at')
+    list_display = (
+        'title', 'author', 'categories', 'slug', 'is_published', 'breaking_news', 'created_at', 'updated_at')
     search_fields = ('title',)
     ordering = ('-created_at',)
+    fieldsets = [
+        ('Main', {'fields': ['title', 'slug', 'content','featured_image','breaking_news', 'is_published','author','keywords' ]}),
+        ('Seo', {'fields': ['page_title', 'meta_description']})
+    ]
 
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('title', 'created', 'updated')
+    list_display = ('title', 'created_at', 'updated_at')
     search_fields = ('title',)
+
+    fieldsets = [
+        ('Main', {'fields': ['title', 'slug', 'description', ]}),
+        ('Seo', {'fields': ['page_title', 'meta_description']})
+    ]
 
 
 @admin.register(Comment)

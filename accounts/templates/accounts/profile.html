@@ -26,7 +26,7 @@
                                     <div class="col-md-8">
                                         <div class="card-body">
                                             <h5 class="card-title">{{ post.title }}</h5>
-                                            <p class="card-text">{{ post.content|truncatewords:50 |safe}}</p>
+                                            <p class="card-text">{{ post.content|truncatewords:50 |safe }}</p>
                                             <p class="card-text"><small class="text-muted">Category: <a
                                                     href="{% url 'posts:single_category' post.categories.slug %}">{{ post.categories }}</a></small>
                                             </p>
@@ -66,6 +66,8 @@
                     <p class="small"><strong>Email:</strong> {{ user_information.email }}</p>
                     <p class="small"><strong>Last Login:</strong> {{ user_information.last_login|timesince }}</p>
                     <p class="small"><strong>Posts:</strong> {{ user_post|length }}</p>
+                    <p class="small text-danger"><strong>Unpublished:</strong> {{ unpublished_posts|length }}</p>
+
 
                     {% if user_information.bio %}
                         <p class="small"><strong>Bio:</strong> {{ user_information.bio }}</p>

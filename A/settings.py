@@ -150,14 +150,14 @@ AUTHENTICATION_BACKENDS = [
 ###Storage####
 
 # DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-# AWS_ACCESS_KEY_ID = '29226bb1-9b1d-413a-843b-7db180869e16'
-# AWS_SECRET_ACCESS_KEY = 'b7e5677d27cb90735f8c49cbb373ae92e474ab0c50e9de11c445dc03561f2289'
-# AWS_S3_ENDPOINT_URL = "https://milad-weblog.s3.ir-thr-at1.arvanstorage.ir/"
-# AWS_STORAGE_BUCKET_NAME = 'milad-weblog'
+# AWS_ACCESS_KEY_ID = '-'
+# AWS_SECRET_ACCESS_KEY = '-'
+# AWS_S3_ENDPOINT_URL = "-"
+# AWS_STORAGE_BUCKET_NAME = '-'
 # AWS_LOCAL_STORAGE = f'{BASE_DIR}/aws/'
 # AWS_SERVICE_NAME = 's3'
 # AWS_S3_FILE_OVERWRITE = False
-# MEDIA_URL = 'https://milad-weblog.s3.ir-thr-at1.arvanstorage.ir/'
+# MEDIA_URL = -'
 # AWS_STORAGE_DIR = f"{BASE_DIR}/aws"
 
 
