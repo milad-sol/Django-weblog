@@ -10,4 +10,4 @@ def send_sms_code(mobile, code):
     _from = '-'
     text = f'Your code is {code}'
     response = sms.send(to, _from, text)
-    print(response)
+
