@@ -25,7 +25,6 @@ class Seo(models.Model):
         help_text="Recommended: 150-160 characters for meta description"
     )
 
-
     class Meta:
         verbose_name = "SEO Metadata"
         verbose_name_plural = "SEO Metadata Entries"
@@ -64,11 +63,11 @@ class Category(BaseTimeStamp, Seo):
         return super().save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('posts:post-category-detail', kwargs={'pk': self.title})
+        return reverse('posts:single_category', kwargs={'slug': self.slug})
 
 
 # Create your models here.
-class Post(BaseTimeStamp,Seo):
+class Post(BaseTimeStamp, Seo):
     categories = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True, related_name='categories')
     title = models.CharField(max_length=150)
     slug = models.SlugField(max_length=20, unique=True, blank=True)
@@ -90,7 +89,6 @@ class Post(BaseTimeStamp,Seo):
 
     def get_absolute_url(self):
         return reverse('posts:post-detail', kwargs={'slug': self.slug})
-
 
 
 class Comment(BaseTimeStamp):

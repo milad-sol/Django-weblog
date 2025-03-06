@@ -12,7 +12,8 @@ class PostAdmin(admin.ModelAdmin):
     search_fields = ('title',)
     ordering = ('-created_at',)
     fieldsets = [
-        ('Main', {'fields': ['title', 'slug', 'content','featured_image','breaking_news', 'is_published','author','keywords' ]}),
+        ('Main', {'fields': ['title', 'slug', 'content', 'featured_image', 'breaking_news', 'is_published', 'author',
+                             'categories']}),
         ('Seo', {'fields': ['page_title', 'meta_description']})
     ]
 
