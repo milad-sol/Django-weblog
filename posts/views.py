@@ -4,9 +4,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
-from django.views.generic import DetailView, CreateView, DeleteView, UpdateView, ListView, TemplateView, View
-from .forms import CreatePostForm, CommentCreateForm, CommentReplyForm
+from django.views.generic import DetailView, CreateView, DeleteView, UpdateView, ListView, View
+
 from posts.models import Post, Category, Comment
+from .forms import CreatePostForm, CommentCreateForm, CommentReplyForm
 
 
 class PostDetailView(View):

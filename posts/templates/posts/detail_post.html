@@ -5,15 +5,15 @@
 
 {% block seo %}
     <meta name="description"
-          content="Explore the latest news and updates in Technology, Sports, and more at My Weblog. Stay informed with our engaging articles and community discussions.">
+          content="{{ post.meta_description }}">
     <meta name="keywords" content="news, technology, sports, weblog, blog, updates, articles">
-    <meta name="author" content="My Weblog Team">
+    <meta name="author" content="{{ post.author }}">
 
 
 
-    <meta property="og:title" content="My Weblog - Latest News in Technology, Sports, and More">
+    <meta property="og:title" content="{{ post.page_title }}">
     <meta property="og:description"
-          content="Explore the latest news and updates in Technology, Sports, and more at My Weblog. Stay informed with our engaging articles.">
+          content="{{ post.meta_description }}">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.myweblog.com/">
 

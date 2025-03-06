@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Post, Category, Comment, Seo
+
+from .models import Post, Category, Comment
 
 
 # Register your models here.
@@ -11,6 +12,7 @@ class PostAdmin(admin.ModelAdmin):
         'title', 'author', 'categories', 'slug', 'is_published', 'breaking_news', 'created_at', 'updated_at')
     search_fields = ('title',)
     ordering = ('-created_at',)
+    list_editable = ['is_published', 'breaking_news', 'author']
     fieldsets = [
         ('Main', {'fields': ['title', 'slug', 'content', 'featured_image', 'breaking_news', 'is_published', 'author',
                              'categories']}),
