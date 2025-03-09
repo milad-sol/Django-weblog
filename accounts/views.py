@@ -1,16 +1,17 @@
+from datetime import datetime, timedelta, timezone
+from random import randint
+
 from django.contrib import messages
-from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, View, FormView, UpdateView
+
 from posts.models import Post
+from utils import send_sms_code
 from .forms import UserRegistrationForm, LoginForm, EditProfileForm, MobileLoginForm, VerifyOtpCodeForm, \
     SendForgotPasswordSmsForm, ForgotPasswordForm
 from .models import User, OtpCode
-from django.contrib.auth import login, logout, authenticate
-from random import randint
-from utils import send_sms_code
-from datetime import datetime, timedelta, timezone
 
 
 class UserLoginView(FormView):
@@ -98,6 +99,10 @@ class UserLoginMobileView(View):
         if form.is_valid():
             mobile = form.cleaned_data['mobile']
             mobile_in_database = User.objects.filter(phone_number=mobile).exists()
+            if OtpCode.objects.filter(mobile=mobile).exists():
+                messages.error(self.request, 'we sent you a code if you did not resave it please try 2 minute later',
+                               'danger')
+                return redirect('accounts:login_mobile')
             if mobile_in_database:
                 random_number = randint(1000, 9999)
                 OtpCode.objects.create(mobile=mobile, code=random_number)
@@ -108,6 +113,7 @@ class UserLoginMobileView(View):
                 }
                 messages.success(self.request, 'The code sent to your mobile', 'success')
                 return redirect('accounts:verify_otp')
+
             messages.error(self.request, 'invalid phone number or you have not registered yet!', 'danger')
             return redirect('accounts:login_mobile')
         return render(request, self.template_name, {'form': form})
@@ -121,29 +127,7 @@ class VerifyOtpCodeMobileView(View):
         return render(request, self.template_name, {'form': self.from_class()})
 
     def post(self, request):
-        """
-        Handles the POST request for OTP verification.
-
-        This method retrieves the OTP code submitted by the user, compares it with the OTP code stored in the database,
-        and logs the user in if the codes match.  It also handles form validation and error messages.
-
-        Args:
-            request (HttpRequest): The HTTP request object.
-
-        Returns:
-            HttpResponse:  A redirect to the user's profile page upon successful login, a redirect back to the OTP
-                           verification page with an error message if the OTP is invalid, or a rendered form with errors
-                           if the form validation fails.
-
-        Note:
-            `user.backend = 'django.contrib.auth.backends.ModelBackend'` is crucial for Django to
-             correctly authenticate the user using the default model backend. Without this, Django might not
-             be able to properly recognize the user as authenticated, especially when using custom authentication
-             methods or backends initially.  This ensures that subsequent login attempts leverage the standard
-             username/password verification process if needed, and that the user's permissions and groups are correctly
-             loaded.
-        """
-
+   
         form = self.from_class(request.POST)
         user_data = request.session.get('user_login_data')
         otp_code = OtpCode.objects.get(code=user_data['otp_code'])
