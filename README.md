@@ -63,8 +63,8 @@ The project consists of the following Django apps:
 ## Installation and Setup
 1. Clone the repository:
 ``` bash
-git clone https://github.com/milad-sol/weblog.git
-cd weblog
+git clone https://github.com/milad-sol/Django-weblog
+cd Django-weblog
 ```
 1. Create and activate a virtual environment:
 ``` bash
